@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ticket Verification</title>
+</head>
+
+<body style="text-align:center;font-family:Arial;margin-top:100px;">
+
+{% if status == "valid" %}
+<h1 style="color:green;">✅ VALID TICKET</h1>
+<p>Reference: {{ reference }}</p>
+{% else %}
+<h1 style="color:red;">❌ INVALID TICKET</h1>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-xl mx-auto py-20 text-center">
+
+<div class="bg-green-100 border border-green-400 rounded-lg p-8">
+
+<h2 class="text-2xl font-bold text-green-700 mb-4">
+✅ Booking Request Received
+</h2>
+
+<p class="mb-4">
+Your travel booking has been received successfully.
+</p>
+
+<p class="text-gray-700 mb-2">
+Your booking reference number is:
+</p>
+
+{% if reference %}
+<div class="mt-6">
+    <p class="text-gray-700 mb-2">Your Ticket QR Code:</p>
+
+    <img src="/media/ticket_{{ reference }}.png"
+         alt="Ticket QR Code"
+         class="mx-auto w-48 border p-2 bg-white rounded-lg">
+
+</div>
+{% endif %}
+
+{% if reference %}
+<h3 class="text-3xl font-bold text-black">
+{{ reference }}
+</h3>
+{% else %}
+<p class="text-gray-600">Reference not available.</p>
+{% endif %}
+
+<p class="mt-4 text-gray-600">
+Please save this reference number for tracking your booking.
+</p>
+
+<div class="mt-6">
+<a href="/travel/" class="bg-black text-white px-6 py-3 rounded-lg">
+Back to Travel Packages
+</a>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<a href="/download-ticket/?reference={{ reference }}" download
+   class="bg-blue-600 text-white px-4 py-2 rounded-lg mt-4 inline-block">
+   Download Ticket
+</a>
+
+{% endblock %}
+

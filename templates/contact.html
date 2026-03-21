@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-5xl mx-auto p-6">
+
+<h1 class="text-3xl font-bold mb-6">Contact DK Experiences</h1>
+
+<div class="grid md:grid-cols-2 gap-10">
+
+<!-- CONTACT INFORMATION -->
+
+<div>
+
+<h2 class="text-xl font-semibold mb-4">Contact Information</h2>
+
+<<p><strong>Phone:</strong><br>
++234 805 582 8183</p>
+
+<p><strong>Email:</strong><br>
+dkexperiencesinlagos@gmail.com</p>
+
+<p class="mb-3">
+<strong>Phone:</strong><br>
++234 XXX XXX XXXX
+</p>
+
+<p class="mb-3">
+<strong>Email:</strong><br>
+info@dkexperiences.com
+</p>
+
+<p class="mb-3">
+<strong>Business Hours:</strong><br>
+Monday – Saturday<br>
+9:00 AM – 6:00 PM
+</p>
+
+</div>
+
+
+<!-- CONTACT FORM -->
+
+<div>
+
+<h2 class="text-xl font-semibold mb-4">Send a Message</h2>
+
+<form method="POST">
+{% csrf_token %}
+
+<label>Name</label>
+<input type="text" name="name" required class="w-full border p-2 mb-4">
+
+<label>Email</label>
+<input type="email" name="email" required class="w-full border p-2 mb-4">
+
+<label>Message</label>
+<textarea name="message" required class="w-full border p-2 mb-4"></textarea>
+
+<button type="submit" class="bg-black text-white px-6 py-2">
+Send Message
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

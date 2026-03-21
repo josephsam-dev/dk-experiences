@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-2xl mx-auto py-16">
+
+<h1 class="text-3xl font-bold mb-6">
+Buy {{ ticket.name }} Ticket
+</h1>
+
+<p class="mb-4">
+Event: {{ ticket.event.title }}
+</p>
+
+<p class="mb-6 font-bold text-yellow-500">
+Price: ₦{{ ticket.price }}
+</p>
+
+<form class="space-y-4">
+
+<input type="text" placeholder="Your Name"
+class="w-full border p-3 rounded">
+
+<input type="email" placeholder="Email Address"
+class="w-full border p-3 rounded">
+
+<input type="number" placeholder="Quantity"
+class="w-full border p-3 rounded">
+
+<button class="bg-black text-white px-6 py-3 rounded">
+Proceed to Payment
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

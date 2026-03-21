@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="bg-black text-white min-h-screen py-16">
+
+<div class="max-w-6xl mx-auto px-6">
+
+{% if messages %}
+{% for message in messages %} <div class="bg-green-600 text-white p-3 rounded mb-6">
+{{ message }} </div>
+{% endfor %}
+{% endif %}
+
+<h1 class="text-4xl font-bold mb-6">Partner With DK Experiences</h1>
+
+<p class="text-gray-400 mb-10">
+DK Experiences collaborates with hotels, travel agencies, and event organizers
+to deliver unforgettable experiences.
+</p>
+
+<hr class="border-gray-700 mb-10">
+
+<h2 class="text-xl font-semibold mb-2">Hotel Partnerships</h2>
+<p class="text-gray-400 mb-6">
+Hotels and resorts can collaborate with us to host travelers across different destinations.
+</p>
+
+<h2 class="text-xl font-semibold mb-2">Event Collaborations</h2>
+<p class="text-gray-400 mb-6">
+We partner with event organizers to create travel packages for concerts,
+festivals, and special events.
+</p>
+
+<h2 class="text-xl font-semibold mb-2">Travel Agencies</h2>
+<p class="text-gray-400 mb-6">
+Travel agencies can collaborate with DK Experiences to expand travel
+opportunities for their clients.
+</p>
+
+<h2 class="text-xl font-semibold mb-2">Corporate Travel Packages</h2>
+<p class="text-gray-400 mb-10">
+We organize corporate travel packages for companies including retreats,
+conferences, and business trips.
+</p>
+
+<hr class="border-gray-700 mb-10">
+
+<h2 class="text-2xl font-bold mb-6">Apply for Partnership</h2>
+
+<form method="POST" class="space-y-6 max-w-xl">
+
+{% csrf_token %}
+
+<div>
+<label class="block mb-2">Company Name</label>
+<input type="text" name="company_name" required
+class="w-full bg-gray-900 border border-gray-700 p-3 rounded">
+</div>
+
+<div>
+<label class="block mb-2">Contact Person</label>
+<input type="text" name="contact_person" required
+class="w-full bg-gray-900 border border-gray-700 p-3 rounded">
+</div>
+
+<div>
+<label class="block mb-2">Email</label>
+<input type="email" name="email" required
+class="w-full bg-gray-900 border border-gray-700 p-3 rounded">
+</div>
+
+<div>
+<label class="block mb-2">Phone</label>
+<input type="text" name="phone"
+class="w-full bg-gray-900 border border-gray-700 p-3 rounded">
+</div>
+
+<div>
+<label class="block mb-2">Partnership Type</label>
+<select name="partnership_type"
+class="w-full bg-gray-900 border border-gray-700 p-3 rounded">
+
+<option value="hotel">Hotel Partnership</option>
+<option value="event">Event Collaboration</option>
+<option value="agency">Travel Agency</option>
+<option value="corporate">Corporate Travel</option>
+
+</select>
+</div>
+
+<div>
+<label class="block mb-2">Message</label>
+<textarea name="message"
+class="w-full bg-gray-900 border border-gray-700 p-3 rounded"></textarea>
+</div>
+
+<button type="submit"
+class="bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded font-semibold">
+Submit Application </button>
+
+</form>
+
+</div>
+</div>
+
+{% endblock %}

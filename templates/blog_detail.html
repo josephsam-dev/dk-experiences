@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div style="max-width:900px; margin:50px auto;">
+
+    <h1>{{ post.title }}</h1>
+
+    <p style="color:gray;">
+        Published on {{ post.created_at }}
+    </p>
+
+    <img src="{% static 'images/akoka-fest.jpg' %}" style="width:100%; margin:20px 0;">
+
+    <p style="line-height:1.8;">
+        {{ post.content }}
+    </p>
+
+</div>
+
+{% endblock %}
