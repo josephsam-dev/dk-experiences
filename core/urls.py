@@ -11,7 +11,12 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('events/', views.events, name='events'),
 
-    path('', include('travel.urls')),   # connect your travel app
+    path('', include('travel.urls')),
 ]
 
+# ✅ MEDIA (uploads)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# 🔥 ADD THIS (THIS IS THE FIX)
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
