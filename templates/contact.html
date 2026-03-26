@@ -9,28 +9,35 @@
 <div class="grid md:grid-cols-2 gap-10">
 
 <!-- CONTACT INFORMATION -->
-
 <div>
 
 <h2 class="text-xl font-semibold mb-4">Contact Information</h2>
 
-<<p><strong>Phone:</strong><br>
-+234 805 582 8183</p>
+<div class="space-y-4 text-gray-800">
 
-<p><strong>Email:</strong><br>
-dkexperiencesinlagos@gmail.com</p>
-
-<p class="mb-3">
-<strong>Phone:</strong><br>
-+234 XXX XXX XXXX
+<p>
+<strong>Address:</strong><br>
+Lagos, Nigeria
 </p>
 
-<p class="mb-3">
+<p>
 <strong>Email:</strong><br>
-info@dkexperiences.com
+dkexperiencesinlagos@gmail.com
 </p>
 
-<p class="mb-3">
+<p>
+<strong>Phone:</strong><br>
+09021003043
+</p>
+
+<p>
+<strong>WhatsApp:</strong><br>
+<a href="https://wa.me/2348055828183" class="text-green-600 font-semibold">
+08055828183
+</a>
+</p>
+
+<p>
 <strong>Business Hours:</strong><br>
 Monday – Saturday<br>
 9:00 AM – 6:00 PM
@@ -38,26 +45,37 @@ Monday – Saturday<br>
 
 </div>
 
+</div>
 
 <!-- CONTACT FORM -->
-
 <div>
 
 <h2 class="text-xl font-semibold mb-4">Send a Message</h2>
 
-<form method="POST">
+<form method="POST" class="space-y-4">
+
 {% csrf_token %}
 
-<label>Name</label>
-<input type="text" name="name" required class="w-full border p-2 mb-4">
+<div>
+<label class="block mb-1">Name</label>
+<input type="text" name="name" required
+class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+</div>
 
-<label>Email</label>
-<input type="email" name="email" required class="w-full border p-2 mb-4">
+<div>
+<label class="block mb-1">Email</label>
+<input type="email" name="email" required
+class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+</div>
 
-<label>Message</label>
-<textarea name="message" required class="w-full border p-2 mb-4"></textarea>
+<div>
+<label class="block mb-1">Message</label>
+<textarea name="message" required rows="4"
+class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+</div>
 
-<button type="submit" class="bg-black text-white px-6 py-2">
+<button type="submit"
+class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition">
 Send Message
 </button>
 

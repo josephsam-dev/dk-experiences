@@ -131,6 +131,7 @@ def verify_payment(request):
         img = qrcode.make(verify_url)
         path = os.path.join(settings.MEDIA_ROOT, f"ticket_{reference}.png")
         img.save(path)
+        
 
         return redirect(f"/booking-success/?reference={reference}")
 
@@ -145,6 +146,16 @@ from django.conf import settings
 from .models import Ticket
 
 
+from django.shortcuts import redirect
+from django.http import HttpResponse
+from django.conf import settings
+from django.core.mail import send_mail
+import requests
+import qrcode
+import os
+from .models import Ticket
+
+
 def verify_payment(request):
 
     reference = request.GET.get("reference")
@@ -152,8 +163,8 @@ def verify_payment(request):
     if not reference:
         return HttpResponse("No reference provided")
 
+    # Verify payment from Paystack
     url = f"https://api.paystack.co/transaction/verify/{reference}"
-
     headers = {
         "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}"
     }
@@ -161,34 +172,38 @@ def verify_payment(request):
     response = requests.get(url, headers=headers)
     result = response.json()
 
-    print(result)  # shows Paystack response in terminal
+    # ✅ If payment is successful
+    if result["data"]["status"] == "success":
 
-    if True:
+        data = request.session.get("ticket_data")
 
-        # payment_data = result["data"]
+        # Create ticket
+        Ticket.objects.create(
+            ticket_id=reference,
+            name=data["name"],
+            email=data["email"],
+            phone=data["phone"],
+            ticket_type=data["ticket_type"],
+            payment_status="paid"
+        )
 
-        if True:
-            name = "Test User"
-    email = "test@email.com"
-    phone = "08000000000"
-    ticket_type = "early"
+        # Generate QR
+        verify_url = f"http://127.0.0.1:8000/verify-ticket/{reference}/"
+        img = qrcode.make(verify_url)
+        path = os.path.join(settings.MEDIA_ROOT, f"ticket_{reference}.png")
+        img.save(path)
 
-    ticket = Ticket.objects.create(
-    ticket_id=reference,
-    name=name,
-    email=email,
-    phone=phone,
-    ticket_type=ticket_type,
-)
-    
-    verify_url = f"http://127.0.0.1:8000/verify-ticket/{reference}/"
-    img = qrcode.make(verify_url)
-    path = os.path.join(settings.MEDIA_ROOT, f"ticket_{reference}.png")
-    img.save(path)
+        # Send email (simple first)
+        send_mail(
+            "Ticket Confirmation",
+            f"Hello {data['name']}, your ticket is confirmed. Ticket ID: {reference}",
+            settings.EMAIL_HOST_USER,
+            [data["email"]],
+        )
 
-    print("CREATING QR FOR:", reference)
+        return redirect(f"/booking-success/?reference={reference}")
 
-    return redirect(f"/booking-success/?reference={reference}")
+    # ❌ If payment fails
     return HttpResponse("Payment verification failed")
 def booking_success(request):
     reference = request.GET.get("reference")
@@ -247,7 +262,14 @@ def verify_ticket(request, reference):
 from django.conf import settings
 from django.shortcuts import render
 
+from django.shortcuts import render, get_object_or_404
+from django.conf import settings
+from .models import Ticket  # or your model name
+
 def buy_ticket(request, id):
+    ticket = get_object_or_404(Ticket, id=id)
+
     return render(request, "travel/buy_ticket.html", {
+        "ticket": ticket,
         "PAYSTACK_PUBLIC_KEY": settings.PAYSTACK_PUBLIC_KEY
     })

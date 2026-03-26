@@ -7,7 +7,7 @@
 <h1 class="text-3xl font-bold mb-6">
 Buy {{ ticket.name }} Ticket
 </h1>
-
+<p style="color:red
 <p class="mb-4">
 Event: {{ ticket.event.title }}
 </p>
@@ -27,12 +27,38 @@ class="w-full border p-3 rounded">
 <input type="number" placeholder="Quantity"
 class="w-full border p-3 rounded">
 
-<button class="bg-black text-white px-6 py-3 rounded">
-Proceed to Payment
+<button type="button" onclick="payWithPaystack()"
+    class="bg-orange-500 text-white w-full py-3 rounded">
+    Proceed to Payment
 </button>
 
 </form>
 
 </div>
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+<script>
+function payWithPaystack() {
+    let email = document.querySelector('input[type="email"]').value;
+
+    let handler = PaystackPop.setup({
+        key: "{{ PAYSTACK_PUBLIC_KEY }}",  // 🔥 from Django
+        email: email,
+        amount: {{ ticket.price }} * 100,  // convert to kobo
+        currency: "NGN",
+
+        callback: function(response){
+            window.location.href = "/verify-payment/?reference=" + response.reference;
+        },
+
+        onClose: function(){
+            alert('Transaction cancelled');
+        }
+    });
+
+    handler.openIframe();
+}
+</script>
 
 {% endblock %}
