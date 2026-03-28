@@ -1,3 +1,4 @@
+from .models import Ticket
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, FileResponse
 from django.conf import settings
@@ -153,7 +154,7 @@ from django.core.mail import send_mail
 import requests
 import qrcode
 import os
-from .models import Ticket
+
 
 
 def verify_payment(request):
@@ -246,7 +247,7 @@ def download_ticket(request):
 
 
 def verify_ticket(request, reference):
-    from .models import Ticket
+    
 
     try:
         ticket = Ticket.objects.get(ticket_id=reference)
@@ -264,7 +265,7 @@ from django.shortcuts import render
 
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
-from .models import Ticket  # or your model name
+  # or your model name
 
 def buy_ticket(request, id):
     ticket = get_object_or_404(Ticket, id=id)
