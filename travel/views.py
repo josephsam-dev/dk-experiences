@@ -276,22 +276,21 @@ def buy_ticket(request, id):
 
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
+from django.http import HttpResponse
+from django.contrib.auth import get_user_model
 
 def create_admin(request):
     User = get_user_model()
 
     try:
-        count = User.objects.count()  # 👈 THIS LINE WILL EXPOSE DB ISSUE
+        user, created = User.objects.get_or_create(username="admin")
 
-        if not User.objects.filter(username="admin").exists():
-            User.objects.create_superuser(
-                username="admin",
-                email="admin@gmail.com",
-                password="admin123"
-            )
-            return HttpResponse(f"Admin created ✅ | Total users: {count}")
-        else:
-            return HttpResponse(f"Admin already exists ⚠️ | Total users: {count}")
+        user.set_password("admin123")  # 🔥 reset password
+        user.is_superuser = True
+        user.is_staff = True
+        user.save()
+
+        return HttpResponse("Admin password reset successfully ✅")
 
     except Exception as e:
         return HttpResponse(f"ERROR 👉 {str(e)}")
