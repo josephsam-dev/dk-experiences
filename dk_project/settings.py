@@ -21,22 +21,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
+SECRET_KEY = 'django-insecure-simple-key-123456'
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "dk-experiences.onrender.com",
-    "localhost",
-    "127.0.0.1"
+    'samsharp.pythonanywhere.com',
+    'www.samsharp.pythonanywhere.com'
 ]
 
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://samsharp.pythonanywhere.com',
+    'https://www.samsharp.pythonanywhere.com'
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -157,5 +155,6 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 import os
 
-PAYSTACK_SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY")
+
+
 PAYSTACK_PUBLIC_KEY = os.getenv("PAYSTACK_PUBLIC_KEY")
