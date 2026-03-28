@@ -12,6 +12,7 @@ urlpatterns = [
     path('events/', views.events, name='events'),
 
     path('', include('travel.urls')),
+    path('buy-ticket/<int:id>/', views.buy_ticket, name='buy_ticket'),
 ]
 
 # ✅ MEDIA (uploads)
@@ -20,3 +21,5 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # 🔥 ADD THIS (THIS IS THE FIX)
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
+
+    
