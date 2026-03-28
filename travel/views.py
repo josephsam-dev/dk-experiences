@@ -1,4 +1,4 @@
-from .models import Ticket
+from events.models import Ticket
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, FileResponse
 from django.conf import settings
