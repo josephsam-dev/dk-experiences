@@ -17,4 +17,5 @@ urlpatterns = [
     path("download-ticket/", views.download_ticket, name="download_ticket"),
     path('verify-ticket/<str:reference>/', views.verify_ticket, name='verify_ticket'),
     path("create-admin/", views.create_admin),
+    
 ]

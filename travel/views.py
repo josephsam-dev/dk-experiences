@@ -274,13 +274,24 @@ def buy_ticket(request, id):
         "PAYSTACK_PUBLIC_KEY": settings.PAYSTACK_PUBLIC_KEY
     })
 
-
-
-    from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.contrib.auth import get_user_model
 
 def create_admin(request):
-    if not User.objects.filter(username="admin").exists():
-        User.objects.create_superuser("admin", "admin@gmail.com", "admin123")
-        return HttpResponse("Admin created")
-    return HttpResponse("Admin already exists")
+    User = get_user_model()
+
+    try:
+        count = User.objects.count()  # 👈 THIS LINE WILL EXPOSE DB ISSUE
+
+        if not User.objects.filter(username="admin").exists():
+            User.objects.create_superuser(
+                username="admin",
+                email="admin@gmail.com",
+                password="admin123"
+            )
+            return HttpResponse(f"Admin created ✅ | Total users: {count}")
+        else:
+            return HttpResponse(f"Admin already exists ⚠️ | Total users: {count}")
+
+    except Exception as e:
+        return HttpResponse(f"ERROR 👉 {str(e)}")
