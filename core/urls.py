@@ -12,8 +12,10 @@ urlpatterns = [
     path('events/', views.events, name='events'),
 
     path('', include('travel.urls')),
-    
+     path("travel/", include("travel.urls")),
 ]
+    
+
 
 # ✅ MEDIA (uploads)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
