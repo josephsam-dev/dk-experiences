@@ -12,7 +12,7 @@ urlpatterns = [
     path('events/', views.events, name='events'),
 
     path('', include('travel.urls')),
-    path('buy-ticket/<int:id>/', views.buy_ticket, name='buy_ticket'),
+    
 ]
 
 # ✅ MEDIA (uploads)
