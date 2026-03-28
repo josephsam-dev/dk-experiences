@@ -11,7 +11,6 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('events/', views.events, name='events'),
 
-    path('', include('travel.urls')),
      path("travel/", include("travel.urls")),
 ]
     
