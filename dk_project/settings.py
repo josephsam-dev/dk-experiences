@@ -26,14 +26,12 @@ SECRET_KEY = 'django-insecure-simple-key-123456'
 
 DEBUG = False
 
-ALLOWED_HOSTS = [
-    'samsharp.pythonanywhere.com',
-    'www.samsharp.pythonanywhere.com'
-]
+ALLOWED_HOSTS = ['dk-experiences.onrender.com']
+    
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://samsharp.pythonanywhere.com',
-    'https://www.samsharp.pythonanywhere.com'
+    'https://dk-experiences.onrender.com',
+    'https://samsharp.pythonanywhere.com'
 ]
 # Application definition
 
