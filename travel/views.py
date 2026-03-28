@@ -1,15 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from django.conf import settings
 from django.contrib import messages
+from django.core.mail import send_mail
 
 import requests
 import qrcode
 import os
 
-
-from .models import TravelPackage, Booking, BlogPost, PartnershipApplication, Ticket
-
+from .models import TravelPackage, Booking, BlogPost, PartnershipApplication
+from events.models import Ticket
 # TRAVEL PACKAGES PAGE
 def travel_page(request):
     packages = TravelPackage.objects.all()
@@ -91,7 +91,7 @@ def partnership(request):
     return render(request, "travel/partnership.html")
 
 
-from .models import Ticket
+from events.models import Ticket
 
 from django.conf import settings
 
@@ -143,7 +143,7 @@ import requests
 import qrcode
 from django.http import HttpResponse
 from django.conf import settings
-from .models import Ticket
+
 
 
 from django.shortcuts import redirect
