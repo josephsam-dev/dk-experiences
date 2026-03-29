@@ -17,7 +17,8 @@ Event: {{ ticket.event.title }}
 DEBUG PRICE: {{ ticket.price }}
 </p>
 
-<form class="space-y-4">
+<form method="POST" class="space-y-4">
+    {% csrf_token %}
 
 <input type="text" placeholder="Your Name"
 class="w-full border p-3 rounded">
@@ -44,30 +45,21 @@ Proceed to Payment
 
 </div>
 
-<script src="https://js.paystack.co/v1/inline.js"></script>
+<form method="POST" class="space-y-4">
+    {% csrf_token %}
 
-<script>
-function payWithPaystack() {
-    let email = document.querySelector('input[type="email"]').value;
-    let price = document.getElementById("ticketType").value;
+    <input type="text" name="name" placeholder="Your Name"
+    class="w-full border p-3 rounded">
 
-    let handler = PaystackPop.setup({
-        key: "{{ PAYSTACK_PUBLIC_KEY }}",  // 🔥 from Django
-        email: email,
-        amount: parseFloat(price) * 100,  // convert to kobo
-        currency: "NGN",
+    <input type="email" name="email" placeholder="Email Address"
+    class="w-full border p-3 rounded" required>
 
-        callback: function(response){
-            window.location.href = "/verify-payment/?reference=" + response.reference;
-        },
+    <input type="number" name="quantity" placeholder="Quantity"
+    class="w-full border p-3 rounded">
 
-        onClose: function(){
-            alert('Transaction cancelled');
-        }
-    });
+    <button type="submit"
+    class="bg-orange-500 text-white w-full py-3 rounded">
+    Proceed to Payment
+    </button>
 
-    handler.openIframe();
-}
-</script>
-
-{% endblock %}
+</form>

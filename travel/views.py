@@ -267,12 +267,34 @@ from django.shortcuts import render, get_object_or_404
 from django.conf import settings
   # or your model name
 
+from django.shortcuts import render, get_object_or_404, redirect
+from django.conf import settings
+import requests
+
 def buy_ticket(request, id):
     ticket = get_object_or_404(Ticket, id=id)
 
+    if request.method == "POST":
+        email = request.POST.get("email")
+
+        url = "https://api.paystack.co/transaction/initialize"
+        headers = {
+            "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
+            "Content-Type": "application/json",
+        }
+
+        data = {
+            "email": email,
+            "amount": int(ticket.price * 100),  # ✅ ALWAYS CORRECT
+        }
+
+        response = requests.post(url, json=data, headers=headers)
+        res_data = response.json()
+
+        return redirect(res_data["data"]["authorization_url"])
+
     return render(request, "travel/buy_ticket.html", {
-        "ticket": ticket,
-        "PAYSTACK_PUBLIC_KEY": settings.PAYSTACK_PUBLIC_KEY
+        "ticket": ticket
     })
 
 from django.http import HttpResponse
@@ -295,3 +317,9 @@ def create_admin(request):
 
     except Exception as e:
         return HttpResponse(f"ERROR 👉 {str(e)}")
+    
+
+    
+
+
+    
