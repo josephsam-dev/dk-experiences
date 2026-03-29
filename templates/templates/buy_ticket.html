@@ -7,12 +7,14 @@
 <h1 class="text-3xl font-bold mb-6">
 Buy {{ ticket.name }} Ticket
 </h1>
-<p class="mb-4">
-    Event: {{ ticket.event.title }}
-</p>>
-Event: {{ ticket.event.title }}
+
+<p style="color:red; font-size:20px;">
+KEY: {{ PAYSTACK_PUBLIC_KEY }}
 </p>
 
+<p class="mb-4">
+Event: {{ ticket.event.title }}
+</p>
 <p style="color:red; font-size:20px;">
 DEBUG PRICE: {{ ticket.price }}
 </p>
