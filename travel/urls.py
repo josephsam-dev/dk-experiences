@@ -3,6 +3,8 @@ from . import views
 
 urlpatterns = [
 
+    path("test/", views.test_page),  # 👈 ADD THIS LINE HERE (VERY TOP)
+
     path("", views.travel_page, name="travel"),
 
     path("buy-ticket/<int:id>/", views.buy_ticket, name="buy_ticket"),

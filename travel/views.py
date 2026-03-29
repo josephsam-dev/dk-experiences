@@ -299,12 +299,13 @@ def buy_ticket(request, id):
 
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse
-from django.contrib.auth import get_user_model
+
+def test_page(request):
+    return HttpResponse("WORKING")
 
 def create_admin(request):
     User = get_user_model()
-
+    ...
     try:
         user, created = User.objects.get_or_create(username="admin")
 
