@@ -20,13 +20,13 @@ DEBUG PRICE: {{ ticket.price }}
 <form method="POST" class="space-y-4">
     {% csrf_token %}
 
-<input type="text" placeholder="Your Name"
+<input type="text" name="name" placeholder="Your Name"
 class="w-full border p-3 rounded">
 
-<input type="email" placeholder="Email Address"
-class="w-full border p-3 rounded">
+<input type="email" name="email" placeholder="Email Address"
+class="w-full border p-3 rounded" required>
 
-<input type="number" placeholder="Quantity"
+<input type="number" name="quantity" placeholder="Quantity"
 class="w-full border p-3 rounded">
 
 <!-- ✅ ADD THIS DROPDOWN -->
