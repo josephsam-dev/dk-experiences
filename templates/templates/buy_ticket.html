@@ -7,8 +7,9 @@
 <h1 class="text-3xl font-bold mb-6">
 Buy {{ ticket.name }} Ticket
 </h1>
-<p style="color:red
 <p class="mb-4">
+    Event: {{ ticket.event.title }}
+</p>>
 Event: {{ ticket.event.title }}
 </p>
 
@@ -27,9 +28,16 @@ class="w-full border p-3 rounded">
 <input type="number" placeholder="Quantity"
 class="w-full border p-3 rounded">
 
+<!-- ✅ ADD THIS DROPDOWN -->
+<select id="ticketType" class="w-full border p-3 rounded">
+    <option value="{{ ticket.price }}">
+    {{ ticket.category }} - ₦{{ ticket.price }}
+</option>
+</select>
+
 <button type="button" onclick="payWithPaystack()"
-    class="bg-orange-500 text-white w-full py-3 rounded">
-    Proceed to Payment
+class="bg-orange-500 text-white w-full py-3 rounded">
+Proceed to Payment
 </button>
 
 </form>
@@ -41,11 +49,12 @@ class="w-full border p-3 rounded">
 <script>
 function payWithPaystack() {
     let email = document.querySelector('input[type="email"]').value;
+    let price = document.getElementById("ticketType").value;
 
     let handler = PaystackPop.setup({
         key: "{{ PAYSTACK_PUBLIC_KEY }}",  // 🔥 from Django
         email: email,
-        amount: {{ ticket.price }} * 100,  // convert to kobo
+        amount: parseFloat(price) * 100,  // convert to kobo
         currency: "NGN",
 
         callback: function(response){
