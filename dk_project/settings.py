@@ -20,8 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-import os
 
+import os
 
 DEBUG = True
 
@@ -123,11 +123,10 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-import os  # make sure this is at the top
+  # make sure this is at the top
 
 STATIC_URL = '/static/'
 
@@ -150,7 +149,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-import os
+
 
 
 
@@ -161,3 +160,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'temporary-secret-key')
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
+
+
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
