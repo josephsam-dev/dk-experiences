@@ -1,3 +1,5 @@
+print("SETTINGS LOADED SUCCESSFULLY")
+
 """
 Django settings for dk_project project.
 
