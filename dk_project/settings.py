@@ -25,13 +25,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 import os
 
-DEBUG = True
+DEBUG = False
 import sys
 
 if not DEBUG:
     sys.stderr.write("DEBUG IS FALSE\n")
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['dk-experiences.onrender.com']
     
 
 CSRF_TRUSTED_ORIGINS = [
@@ -56,8 +56,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
-      # ✅ IMPORTANT
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ MUST BE HERE
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -169,6 +168,6 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
