@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="bg-black text-white py-16 text-center">
+    <h1 class="text-4xl font-bold mb-4">
+        Explore the World with Dlite Travels.ng
+    </h1>
+    <p class="text-gray-300 max-w-xl mx-auto">
+        Discover unforgettable travel experiences, group trips, and luxury adventures.
+    </p>
+</section>
+
+<!-- PACKAGES -->
+<div class="max-w-6xl mx-auto py-16 px-4 bg-black min-h-screen">
+
+    <!-- TITLE -->
+    <div class="text-center mb-12">
+        <p class="text-orange-500 text-sm mb-2">
+            Discover Your Next Adventure
+        </p>
+        
+        <p class="text-gray-400 mt-3 max-w-xl mx-auto">
+            Available Trips
+        </h2>
+
+        <p class="text-gray-400 mt-3 max-w-xl mx-auto">
+            Carefully curated travel experiences designed for fun, connection, and unforgettable memories.
+        </p>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid md:grid-cols-3 gap-8">
+
+        {% for package in packages %}
+
+        <div class="bg-[#0b0b0b] text-white rounded-xl overflow-hidden border border-gray-800 hover:scale-105 transition">
+
+            <!-- IMAGE -->
+            <img src="{{ package.image.url }}" class="w-full h-56 object-cover">
+
+            <!-- CONTENT -->
+            <div class="p-6">
+
+                <h2 class="text-xl font-semibold mb-2">
+                    {{ package.title }}
+                </h2>
+
+                <p class="text-gray-400 mb-4">
+                    {{ package.description|truncatewords:15 }}
+                </p>
+
+                <p class="text-sm text-gray-400">
+                    📍 {{ package.location }}
+                </p>
+
+                <p class="text-sm text-gray-400 mb-4">
+                    🕒 {{ package.duration }}
+                </p>
+
+                <p class="font-bold text-orange-500 text-lg mb-4">
+                    ₦{{ package.price }}
+                </p>
+
+                <!-- ✅ FIXED BUTTON -->
+                <a href="/travel/package/{{ package.id }}/"
+                   class="bg-orange-500 text-center block py-2 rounded-lg hover:bg-orange-600">
+                    Book Now
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

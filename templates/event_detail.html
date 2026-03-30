@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-4xl mx-auto py-16 px-4">
+
+    <!-- EVENT BANNER -->
+    <img src="{% static 'images/akoka-fest.jpg' %}" class="rounded-xl mb-6 w-full h-96 object-cover">
+
+    <!-- EVENT TITLE -->
+    <h1 class="text-3xl font-bold mb-4">
+        {{ event.title }}
+    </h1>
+
+    <!-- DESCRIPTION -->
+    <p class="text-gray-600 mb-4">
+        {{ event.description }}
+    </p>
+
+    <!-- LOCATION -->
+    <p class="text-gray-500">
+        📍 {{ event.location }}
+    </p>
+
+    <!-- DATE & TIME -->
+    <p class="text-gray-500 mb-4">
+        📅 {{ event.date }} | ⏰ {{ event.time }}
+    </p>
+
+    <!-- BASE PRICE -->
+    <p class="text-2xl font-bold text-yellow-500 mb-6">
+        ₦{{ event.price }}
+    </p>
+
+    <!-- TICKET TYPES -->
+    <h2 class="text-2xl font-bold mt-10 mb-4">Available Tickets</h2>
+
+    <div class="space-y-4">
+
+        {% for ticket in event.tickets.all %}
+
+        <div class="flex justify-between items-center border p-4 rounded-lg">
+
+            <div>
+                <h3 class="font-semibold">{{ ticket.name }}</h3>
+                <p class="text-gray-500">Available: {{ ticket.quantity }}</p>
+            </div>
+
+            <div class="flex items-center gap-4">
+
+                <span class="font-bold text-yellow-500">
+                    ₦{{ ticket.price }}
+                </span>
+
+                <!-- ✅ THIS IS THE IMPORTANT PART -->
+                <a href="{% url 'buy_ticket' ticket.id %}"
+                   class="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 text-sm">
+                    Buy
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

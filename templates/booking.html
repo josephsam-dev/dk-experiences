@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-3xl mx-auto py-16 px-4">
+
+<h1 class="text-3xl font-bold mb-6">
+Book {{ package.title }}
+</h1>
+
+<form method="POST" class="space-y-4">
+
+{% csrf_token %}
+
+<input type="text" name="name" placeholder="Your Name"
+class="w-full border p-3 rounded">
+
+<input type="email" name="email" placeholder="Email"
+class="w-full border p-3 rounded">
+
+<input type="text" name="phone" placeholder="Phone Number"
+class="w-full border p-3 rounded">
+
+<input type="number" name="travelers" placeholder="Number of Travelers"
+class="w-full border p-3 rounded">
+
+<input type="date" name="travel_date"
+class="w-full border p-3 rounded">
+
+<button class="bg-black text-white px-6 py-3 rounded-lg">
+Submit Booking
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}
