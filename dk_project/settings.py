@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
 
 
     'events',
@@ -53,7 +54,13 @@ INSTALLED_APPS = [
     'travel',
     'django.contrib.humanize',
 
+=======
+>>>>>>> dbb604a (restore urls)
 
+    'events',
+    'core',
+    'travel',
+    'django.contrib.humanize',
 ]
 
 # MIDDLEWARE (NO WHITENOISE)
