@@ -25,7 +25,7 @@ import os
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["dk-experiences.onrender.com"]
+ALLOWED_HOSTS = ["*"]
     
 
 CSRF_TRUSTED_ORIGINS = [
