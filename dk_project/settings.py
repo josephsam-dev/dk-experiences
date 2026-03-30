@@ -146,7 +146,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'josephsegzy@gmail.com'
-EMAIL_HOST_PASSWORD = 'zjetxctzwygiwynz'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
@@ -155,4 +155,9 @@ import os
 
 
 PAYSTACK_PUBLIC_KEY = "pk_live_9275362cb1c7b8376e6ef21c4ee2bf944b9f9ecb"
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
+
+
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
