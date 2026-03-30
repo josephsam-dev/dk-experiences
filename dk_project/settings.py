@@ -22,7 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 import os
 
-SECRET_KEY = 'django-insecure-simple-key-123456'
 
 DEBUG = True
 
@@ -68,7 +67,7 @@ ROOT_URLCONF = 'dk_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
