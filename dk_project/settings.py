@@ -20,13 +20,13 @@ ALLOWED_HOSTS = [
 
 import os
 
-DEBUG = True
+DEBUG = False
 import sys
 
 if not DEBUG:
     sys.stderr.write("DEBUG IS FALSE\n")
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['dk-experiences.onrender.com']
     
 
 CSRF_TRUSTED_ORIGINS = [
@@ -66,6 +66,11 @@ INSTALLED_APPS = [
 # MIDDLEWARE (NO WHITENOISE)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+<<<<<<< HEAD
+=======
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ MUST BE HERE
+
+>>>>>>> 7724973 (configure whitenoise)
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -131,5 +136,20 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # PAYSTACK
 PAYSTACK_PUBLIC_KEY = "pk_live_9275362cb1c7b8376e6ef21c4ee2bf944b9f9ecb"
+<<<<<<< HEAD
 
 logging.basicConfig(level=logging.DEBUG)
+=======
+SECRET_KEY = os.environ.get('SECRET_KEY', 'temporary-secret-key')
+
+
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+>>>>>>> 7724973 (configure whitenoise)
