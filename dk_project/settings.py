@@ -155,7 +155,7 @@ import os
 
 
 PAYSTACK_PUBLIC_KEY = "pk_live_9275362cb1c7b8376e6ef21c4ee2bf944b9f9ecb"
-SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'temporary-secret-key')
 
 
 import logging
