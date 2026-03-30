@@ -169,13 +169,11 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 PAYSTACK_PUBLIC_KEY = "pk_live_9275362cb1c7b8376e6ef21c4ee2bf944b9f9ecb"
-SECRET_KEY = os.environ.get('SECRET_KEY', 'temporary-secret-key')
-SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
