@@ -1,3 +1,4 @@
+print("SETTINGS LOADED SUCCESSFULLY")
 from pathlib import Path
 import os
 import sys
