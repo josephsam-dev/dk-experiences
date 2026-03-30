@@ -1,9 +1,9 @@
 from django.http import HttpResponse
 from django.urls import path
 
-def crash_test(request):
-    1 / 0  # force error
+def home(request):
+    return HttpResponse("WORKING NOW")
 
 urlpatterns = [
-    path('', crash_test),
+    path('', home),
 ]

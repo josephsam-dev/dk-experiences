@@ -26,6 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 
 DEBUG = True
+import sys
+
+if not DEBUG:
+    sys.stderr.write("DEBUG IS FALSE\n")
 
 ALLOWED_HOSTS = ["*"]
     
@@ -44,10 +48,6 @@ INSTALLED_APPS = [
 'django.contrib.messages',
 'django.contrib.staticfiles',
 
-'events',
-'core',
-'travel',
-'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
