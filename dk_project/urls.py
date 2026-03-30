@@ -1,3 +1,4 @@
+
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -16,3 +17,14 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+from django.http import HttpResponse
+from django.urls import path
+
+def home(request):
+    return HttpResponse("WORKING NOW")
+
+urlpatterns = [
+    path('', home),
+]
+

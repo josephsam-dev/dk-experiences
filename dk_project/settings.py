@@ -16,6 +16,18 @@ ALLOWED_HOSTS = [
     "www.dkexperience.com.ng",
     ".onrender.com"
 ]
+# SECURITY WARNING: keep the secret key used in production secret!
+
+import os
+
+DEBUG = True
+import sys
+
+if not DEBUG:
+    sys.stderr.write("DEBUG IS FALSE\n")
+
+ALLOWED_HOSTS = ["*"]
+    
 
 CSRF_TRUSTED_ORIGINS = [
     'https://dk-experiences.onrender.com',
@@ -35,10 +47,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
     'events',
     'core',
     'travel',
     'django.contrib.humanize',
+
+
 ]
 
 # MIDDLEWARE (NO WHITENOISE)
