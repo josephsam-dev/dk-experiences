@@ -22,10 +22,21 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+<<<<<<< HEAD
     path('', include('core.urls')),
 
     path('events/', include('events.urls')),   # 👈 CHANGE THIS
     path('travel/', include('travel.urls')),   # 👈 CHANGE THIS
 ]
+=======
+    # ✅ CORE handles HOME + CONTACT
+    path('', include('core.urls')),
+
+    # ✅ OTHER APPS
+    path('events/', include('events.urls')),
+    path('travel/', include('travel.urls')),
+]
+
+>>>>>>> 2ac0cf1 (fresh clean commit without secrets)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

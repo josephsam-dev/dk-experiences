@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from events.models import Ticket
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, FileResponse
@@ -11,6 +12,17 @@ import os
 
 from .models import TravelPackage, Booking, BlogPost, PartnershipApplication
 from events.models import Ticket
+=======
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
+from django.conf import settings
+from django.contrib import messages
+
+import requests
+
+
+from .models import TravelPackage, Booking, BlogPost, PartnershipApplication, Ticket
+>>>>>>> 2ac0cf1 (fresh clean commit without secrets)
 # TRAVEL PACKAGES PAGE
 def travel_page(request):
     packages = TravelPackage.objects.all()
@@ -92,7 +104,11 @@ def partnership(request):
     return render(request, "travel/partnership.html")
 
 
+<<<<<<< HEAD
 from events.models import Ticket
+=======
+
+>>>>>>> 2ac0cf1 (fresh clean commit without secrets)
 
 from django.conf import settings
 
@@ -209,8 +225,11 @@ def verify_payment(request):
 def booking_success(request):
     reference = request.GET.get("reference")
     return render(request, "booking_success.html", {"reference": reference})
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 2ac0cf1 (fresh clean commit without secrets)
 def verify_ticket(request, reference):
 
     try:
@@ -271,13 +290,92 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 import requests
 
+<<<<<<< HEAD
 def buy_ticket(request, id):
     ticket = get_object_or_404(Ticket, id=id)
+=======
+from django.shortcuts import render, get_object_or_404, redirect
+from django.conf import settings
+from django.http import HttpResponse
+from django.contrib.auth import get_user_model
+import requests
+
+
+
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
+from django.conf import settings
+import requests
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import Ticket
+
+
+def buy_ticket(request, id=None, ticket_id=None):
+
+    ticket_id = ticket_id or id  # handles both cases
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        phone = request.POST.get("phone")
+
+        Ticket.objects.create(
+            event=ticket.event,
+            category=ticket.category,
+            price=ticket.price,
+            buyer_name=name,
+            buyer_email=email,
+            buyer_phone=phone   # ✅ FIXED
+        )
+
+        return render(request, "booking_success.html")
+
+    return render(request, "buy_ticket.html", {"ticket": ticket})
+
+    from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
+from django.conf import settings
+import requests
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
+from django.conf import settings
+import requests
+
+from events.models import Event, Ticket
+
+
+# 🎟️ SHOW TICKETS (DROPDOWN PAGE)
+def event_tickets(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    tickets = event.tickets.all()
+
+    return render(request, "event_tickets.html", {
+        "event": event,
+        "tickets": tickets
+    })
+
+
+# 💳 BUY TICKET (PAYSTACK)
+def buy_ticket(request, id=None):
+
+    # 🔥 THIS IS THE FIX
+    ticket_id = request.GET.get("ticket_id") or id
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+>>>>>>> 2ac0cf1 (fresh clean commit without secrets)
 
     if request.method == "POST":
         email = request.POST.get("email")
 
         url = "https://api.paystack.co/transaction/initialize"
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2ac0cf1 (fresh clean commit without secrets)
         headers = {
             "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
             "Content-Type": "application/json",
@@ -285,12 +383,17 @@ def buy_ticket(request, id):
 
         data = {
             "email": email,
+<<<<<<< HEAD
             "amount": int(ticket.price * 100),  # ✅ ALWAYS CORRECT
+=======
+            "amount": int(float(ticket.price) * 100)
+>>>>>>> 2ac0cf1 (fresh clean commit without secrets)
         }
 
         response = requests.post(url, json=data, headers=headers)
         res_data = response.json()
 
+<<<<<<< HEAD
         return redirect(res_data["data"]["authorization_url"])
 
     return render(request, "travel/buy_ticket.html", {
@@ -324,3 +427,20 @@ def create_admin(request):
 
 
     
+=======
+        if res_data.get("status"):
+            reference = res_data["data"]["reference"]
+
+            ticket.payment_reference = reference
+            ticket.save()
+
+            return redirect(res_data["data"]["authorization_url"])
+        else:
+            error_message = res_data.get("message", "Something went wrong")
+            return HttpResponse(f"Payment failed ❌: {error_message}")
+
+    return render(request, "buy_ticket.html", {
+        "ticket": ticket,
+        "PAYSTACK_PUBLIC_KEY": settings.PAYSTACK_PUBLIC_KEY
+    })
+>>>>>>> 2ac0cf1 (fresh clean commit without secrets)

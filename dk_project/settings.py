@@ -1,3 +1,5 @@
+print("SETTINGS LOADED SUCCESSFULLY")
+
 """
 Django settings for dk_project project.
 
@@ -20,39 +22,46 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 import os
 
-SECRET_KEY = 'django-insecure-simple-key-123456'
-
 DEBUG = False
+import sys
 
-ALLOWED_HOSTS = ['dk-experiences.onrender.com']
+if not DEBUG:
+    sys.stderr.write("DEBUG IS FALSE\n")
+
+ALLOWED_HOSTS = [
+    "dkexperience.com.ng",
+    "www.dkexperience.com.ng",
+    ".onrender.com"
+]
     
 
 CSRF_TRUSTED_ORIGINS = [
     'https://dk-experiences.onrender.com',
-    'https://samsharp.pythonanywhere.com'
+    'https://dkexperience.com.ng',
+    'https://www.dkexperience.com.ng'
 ]
 # Application definition
 
 INSTALLED_APPS = [
-'django.contrib.admin',
-'django.contrib.auth',
-'django.contrib.contenttypes',
-'django.contrib.sessions',
-'django.contrib.messages',
-'django.contrib.staticfiles',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
 
-'events',
-'core',
-'travel',
-'django.contrib.humanize',
+    'events',
+    'core',
+    'travel',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ IMPORTANT
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ MUST BE HERE
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -68,7 +77,7 @@ ROOT_URLCONF = 'dk_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,11 +133,10 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-import os  # make sure this is at the top
+  # make sure this is at the top
 
 STATIC_URL = '/static/'
 
@@ -147,13 +155,24 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'josephsegzy@gmail.com'
-EMAIL_HOST_PASSWORD = 'zjetxctzwygiwynz'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-import os
 
 
 
-PAYSTACK_PUBLIC_KEY = os.getenv("PAYSTACK_PUBLIC_KEY")
-PAYSTACK_SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY")
+
+PAYSTACK_PUBLIC_KEY = "pk_live_9275362cb1c7b8376e6ef21c4ee2bf944b9f9ecb"
+SECRET_KEY = os.environ.get('SECRET_KEY', 'temporary-secret-key')
+
+
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
