@@ -1,54 +1,30 @@
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
+from django.conf import settings
+import requests
 
 from .models import Event, Ticket
-from django.shortcuts import render, get_object_or_404
-from .models import Event
 
 
+# =========================
+# EVENTS PAGE
+# =========================
 def events_page(request):
     events = Event.objects.all()
     return render(request, "events.html", {"events": events})
 
 
+# =========================
+# EVENT DETAIL
+# =========================
 def event_detail(request, id):
     event = get_object_or_404(Event, id=id)
     return render(request, "event_detail.html", {"event": event})
 
-def buy_ticket(request):
 
-    if request.method == "POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        category = request.POST.get("category")
-        quantity = request.POST.get("quantity")
-
-        event = Event.objects.first()
-
-        Ticket.objects.create(
-            event=event,
-            category=category,
-            price=event.price,
-            buyer_name=name,
-            buyer_email=email,
-            quantity=quantity
-        )
-
-        return render(request, "booking_success.html")
-
-    return render(request, "buy_ticket.html")
-
-import requests
-from django.shortcuts import render, get_object_or_404, redirect
-from django.conf import settings
-from django.http import HttpResponse
-from .models import Ticket
-
-
-# ✅ EVENTS PAGE
-def events(request):
-    return render(request, "events.html")
-
-
-# ✅ BUY TICKET (PAYSTACK)
+# =========================
+# BUY TICKET (PAYSTACK)
+# =========================
 def buy_ticket(request, id):
     ticket = get_object_or_404(Ticket, id=id)
 
@@ -65,15 +41,10 @@ def buy_ticket(request, id):
         data = {
             "email": email,
             "amount": int(ticket.price) * 100,
-            "callback_url": "http://127.0.0.1:8000/events/payment-success/?ticket_id=" + str(ticket.id)
+            "callback_url": f"https://dkexperience.com.ng/events/payment-success/?ticket_id={ticket.id}"
         }
 
         response = requests.post(url, json=data, headers=headers)
-
-        # 🔥 DEBUG OUTPUT
-        print("STATUS CODE:", response.status_code)
-        print("RESPONSE TEXT:", response.text)
-
         res_data = response.json()
 
         if res_data.get("status"):
@@ -84,13 +55,9 @@ def buy_ticket(request, id):
     return render(request, "buy_ticket.html", {"ticket": ticket})
 
 
-# ✅ EVENT DETAIL PAGE
-def event_detail(request, id):
-    ticket = get_object_or_404(Ticket, id=id)
-    return render(request, "event_detail.html", {"ticket": ticket})
-
-
-# ✅ PAYMENT SUCCESS PAGE (FIXED INDENTATION)
+# =========================
+# PAYMENT SUCCESS
+# =========================
 def payment_success(request):
     reference = request.GET.get("reference")
     ticket_id = request.GET.get("ticket_id")
@@ -107,12 +74,9 @@ def payment_success(request):
     response = requests.get(url, headers=headers)
     res_data = response.json()
 
-    print("VERIFY RESPONSE:", res_data)
-
     if res_data.get("status") and res_data["data"]["status"] == "success":
         ticket = get_object_or_404(Ticket, id=ticket_id)
 
-        # ✅ SAVE PAYMENT
         ticket.payment_reference = reference
         ticket.paid = True
         ticket.save()
@@ -122,12 +86,9 @@ def payment_success(request):
     return HttpResponse("Payment verification failed ❌")
 
 
-from django.shortcuts import render
-
+# =========================
+# BLOG (TEMP)
+# =========================
 def blog(request):
-    posts = []  # 🔥 temporary (no database yet)
-
-    return render(request, "blog.html", {
-        "posts": posts
-    })
-
+    posts = []
+    return render(request, "blog.html", {"posts": posts})
