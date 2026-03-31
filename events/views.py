@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 from .models import Event, Ticket
 from django.shortcuts import render, get_object_or_404
 from .models import Event
@@ -130,4 +130,4 @@ def blog(request):
     return render(request, "blog.html", {
         "posts": posts
     })
->>>>>>> 2ac0cf1 (fresh clean commit without secrets)
+
