@@ -35,7 +35,7 @@ def buy_ticket(request):
         return render(request, "booking_success.html")
 
     return render(request, "buy_ticket.html")
-=======
+
 import requests
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
