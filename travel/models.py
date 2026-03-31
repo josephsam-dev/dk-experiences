@@ -2,12 +2,9 @@ import uuid
 from django.db import models
 
 
-<<<<<<< HEAD
-=======
 # =========================
 # TRAVEL PACKAGE
 # =========================
->>>>>>> 2ac0cf1 (fresh clean commit without secrets)
 class TravelPackage(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -20,12 +17,9 @@ class TravelPackage(models.Model):
         return self.title
 
 
-<<<<<<< HEAD
-=======
 # =========================
 # BOOKING
 # =========================
->>>>>>> 2ac0cf1 (fresh clean commit without secrets)
 class Booking(models.Model):
 
     STATUS_CHOICES = [
@@ -59,17 +53,11 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"{self.reference} - {self.name}"
-<<<<<<< HEAD
-    from django.db import models
-
-
-=======
 
 
 # =========================
 # BLOG
 # =========================
->>>>>>> 2ac0cf1 (fresh clean commit without secrets)
 class BlogPost(models.Model):
     title = models.CharField(max_length=200)
     image = models.ImageField(upload_to="blog/")
@@ -80,12 +68,9 @@ class BlogPost(models.Model):
         return self.title
 
 
-<<<<<<< HEAD
-=======
 # =========================
 # CONTACT
 # =========================
->>>>>>> 2ac0cf1 (fresh clean commit without secrets)
 class ContactMessage(models.Model):
     name = models.CharField(max_length=200)
     email = models.EmailField()
@@ -95,15 +80,11 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return self.name
-<<<<<<< HEAD
-    
-=======
 
 
 # =========================
 # PARTNERSHIP
 # =========================
->>>>>>> 2ac0cf1 (fresh clean commit without secrets)
 class PartnershipApplication(models.Model):
 
     PARTNERSHIP_TYPES = [
@@ -123,17 +104,11 @@ class PartnershipApplication(models.Model):
 
     def __str__(self):
         return self.company_name
-<<<<<<< HEAD
-    
-    import uuid
-
-=======
 
 
 # =========================
-# PURCHASED TICKET (AFTER PAYMENT)
+# TICKET
 # =========================
->>>>>>> 2ac0cf1 (fresh clean commit without secrets)
 class Ticket(models.Model):
 
     CATEGORY_CHOICES = [
@@ -155,7 +130,6 @@ class Ticket(models.Model):
     phone = models.CharField(max_length=20)
 
     ticket_type = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
-
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     ticket_id = models.CharField(max_length=50, unique=True, blank=True)
@@ -180,28 +154,4 @@ class Ticket(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-<<<<<<< HEAD
         return f"{self.ticket_id} - {self.ticket_type}"
-=======
-        return f"{self.ticket_id} - {self.ticket_type}"
-
-
-# =========================
-# TICKET TYPE (SELLABLE PRODUCT)
-# =========================
-class TicketType(models.Model):
-
-    CATEGORY_CHOICES = [
-        ("early", "Early Bird"),
-        ("regular", "Regular"),
-        ("vip", "VIP"),
-        ("vvip", "VVIP"),
-    ]
-
-    event_name = models.CharField(max_length=200)
-    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-
-    def __str__(self):
-        return f"{self.category} - {self.event_name}"
->>>>>>> 2ac0cf1 (fresh clean commit without secrets)
