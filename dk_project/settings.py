@@ -1,4 +1,5 @@
 print("SETTINGS LOADED SUCCESSFULLY")
+
 from pathlib import Path
 import os
 import sys
@@ -8,41 +9,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = False
 
-if not DEBUG:
-    sys.stderr.write("DEBUG IS FALSE\n")
-
 ALLOWED_HOSTS = [
     "dkexperience.com.ng",
     "www.dkexperience.com.ng",
-    ".onrender.com"
+    "dk-experiences.onrender.com",
+    "dk-experiences",   # 👈 ADD THIS (VERY IMPORTANT)
+    "localhost",
+    "127.0.0.1"
 ]
-# SECURITY WARNING: keep the secret key used in production secret!
-
-import os
-
-DEBUG = False
-import sys
-
-if not DEBUG:
-    sys.stderr.write("DEBUG IS FALSE\n")
-
-ALLOWED_HOSTS = [
-    "dkexperience.com.ng",
-    "www.dkexperience.com.ng",
-    ".onrender.com"
-]
-    
-
 CSRF_TRUSTED_ORIGINS = [
     'https://dk-experiences.onrender.com',
     'https://dkexperience.com.ng',
     'https://www.dkexperience.com.ng'
 ]
 
-# SECURITY
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 
-# APPS
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,16 +32,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
-
-
-    'events',
-    'core',
-    'travel',
-    'django.contrib.humanize',
-
-=======
->>>>>>> dbb604a (restore urls)
 
     'events',
     'core',
@@ -67,14 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 ]
 
-# MIDDLEWARE (NO WHITENOISE)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-<<<<<<< HEAD
-=======
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ MUST BE HERE
-
->>>>>>> 7724973 (configure whitenoise)
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ ADD THIS
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -82,6 +49,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# ✅ PUT IT HERE (NOT inside middleware)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 ROOT_URLCONF = 'dk_project.urls'
 
@@ -109,19 +79,6 @@ DATABASES = {
     }
 }
 
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
-]
-
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_TZ = True
-
-# STATIC & MEDIA
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -129,31 +86,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# EMAIL
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'josephsegzy@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-# PAYSTACK
 PAYSTACK_PUBLIC_KEY = "pk_live_9275362cb1c7b8376e6ef21c4ee2bf944b9f9ecb"
-<<<<<<< HEAD
-
-logging.basicConfig(level=logging.DEBUG)
-=======
-SECRET_KEY = os.environ.get('SECRET_KEY', 'temporary-secret-key')
-
-
-import logging
 
 logging.basicConfig(level=logging.DEBUG)
 
 
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
->>>>>>> 7724973 (configure whitenoise)
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
