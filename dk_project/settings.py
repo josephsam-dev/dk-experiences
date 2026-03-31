@@ -26,7 +26,11 @@ import sys
 if not DEBUG:
     sys.stderr.write("DEBUG IS FALSE\n")
 
-ALLOWED_HOSTS = ['dk-experiences.onrender.com']
+ALLOWED_HOSTS = [
+    "dkexperience.com.ng",
+    "www.dkexperience.com.ng",
+    ".onrender.com"
+]
     
 
 CSRF_TRUSTED_ORIGINS = [
