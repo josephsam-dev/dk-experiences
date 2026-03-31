@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 from django.shortcuts import render
 from events.models import Event
 
@@ -8,7 +8,7 @@ def home(request):
 def events(request):
     events = Event.objects.all()
     return render(request, 'events.html', {'events': events})
-=======
+
 from django.shortcuts import render, get_object_or_404
 from events.models import Event
 from travel.models import BlogPost
@@ -41,4 +41,4 @@ def blog_detail(request, id):
     return render(request, "blog_detail.html", {
         "post": post
     })
->>>>>>> 2ac0cf1 (fresh clean commit without secrets)
+
