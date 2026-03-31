@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
 
     # TEST
-    path("test/", views.test_page, name="test"),
+
 
     # MAIN PAGE
     path("", views.travel_page, name="travel"),
