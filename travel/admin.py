@@ -4,8 +4,7 @@ from .models import (
     Booking,
     BlogPost,
     PartnershipApplication,
-    Ticket,
-    TicketType
+    Ticket
 )
 
 admin.site.register(TravelPackage)
@@ -13,4 +12,3 @@ admin.site.register(Booking)
 admin.site.register(BlogPost)
 admin.site.register(PartnershipApplication)
 admin.site.register(Ticket)
-admin.site.register(TicketType)
