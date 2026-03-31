@@ -23,7 +23,7 @@ urlpatterns = [
     path("verify-ticket/<str:reference>/", views.verify_ticket, name="verify_ticket"),
 
     # EVENTS
-    path("event/<int:event_id>/tickets/", views.event_tickets, name="event_tickets"),
+    
 
     # PARTNERSHIP
     path("partnership/", views.partnership, name="partnership"),

@@ -159,3 +159,15 @@ def buy_ticket(request, id):
         return HttpResponse("Payment failed")
 
     return render(request, "buy_ticket.html", {"ticket": ticket})
+
+
+from events.models import Event
+
+def event_tickets(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    tickets = event.tickets.all()
+
+    return render(request, "event_tickets.html", {
+        "event": event,
+        "tickets": tickets
+    })
