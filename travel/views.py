@@ -174,6 +174,13 @@ def event_tickets(request, event_id):
 
 
 from django.shortcuts import render
+from django.conf import settings   # ✅ ADD THIS
+
+from django.shortcuts import render
+from django.conf import settings
 
 def buy_ticket(request, ticket_id):
-    return render(request, "travel/buy_ticket.html", {"ticket_id": ticket_id})
+    return render(request, "travel/buy_ticket.html", {
+        "ticket_id": ticket_id,
+        "paystack_public_key": settings.PAYSTACK_PUBLIC_KEY
+    })
