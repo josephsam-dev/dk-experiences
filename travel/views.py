@@ -171,3 +171,9 @@ def event_tickets(request, event_id):
         "event": event,
         "tickets": tickets
     })
+
+
+from django.shortcuts import render
+
+def buy_ticket(request, ticket_id):
+    return render(request, "travel/buy_ticket.html", {"ticket_id": ticket_id})
