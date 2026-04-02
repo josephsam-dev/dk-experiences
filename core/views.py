@@ -14,14 +14,13 @@ from events.models import Event
 from travel.models import BlogPost
 
 
+from events.models import Event
+
 def home(request):
-    try:
-        event = Event.objects.first()
-    except:
-        event = None
+    events = Event.objects.all().order_by('-date')
 
     return render(request, 'home.html', {
-        'event': event
+        'events': events
     })
 
 

@@ -85,6 +85,8 @@ Akoka Fest 2026 Countdown
 
 
 <!-- UPCOMING EVENTS -->
+<!-- UPCOMING EVENTS -->
+
 <section class="bg-black py-24">
 <div class="container mx-auto px-6">
 
@@ -101,75 +103,46 @@ View All Events →
 
 </div>
 
-
 <div class="grid md:grid-cols-3 gap-8">
 
+{% for event in events %}
 
 <div class="bg-[#0b0b0b] border border-gray-800 rounded-xl overflow-hidden">
 
-<img src="{% static 'images/akoka-fest.jpg' %}" class="w-full h-56 object-cover">
+```
+{% if event.banner %}
+<img src="{{ event.banner.url }}" class="w-full h-56 object-cover">
+{% endif %}
 
 <div class="p-6">
 
-<h3 class="text-xl font-semibold text-white mb-3">
-Akoka Fest 2026
-</h3>
+    <h3 class="text-xl font-semibold text-white mb-3">
+        {{ event.title }}
+    </h3>
 
-<p class="text-gray-400 text-sm mb-2">May 9, 2026</p>
-<p class="text-gray-400 text-sm mb-4">Unilag Sports Center</p>
+    <p class="text-gray-400 text-sm mb-2">
+        📅 {{ event.date }}
+    </p>
 
+    <p class="text-gray-400 text-sm mb-4">
+        {{ event.location }}
+    </p>
 
-<<a href="{% url 'buy_ticket' 1 %}"
-   class="block w-full text-center bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">
-   Get Tickets
-</a>
-</div>
-</div>
-
-
-
-<div class="bg-[#0b0b0b] border border-gray-800 rounded-xl overflow-hidden">
-
-<img src="{% static 'images/movie-night.jpg' %}" class="w-full h-56 object-cover">
-
-<div class="p-6">
-
-<h3 class="text-xl font-semibold text-white mb-3">
-DK Movie Night
-</h3>
-
-<p class="text-gray-400 text-sm mb-2">Coming Soon</p>
-<p class="text-gray-400 text-sm mb-4">Magnificent Cinema Onipanu</p>
-
-<button class="bg-orange-500 w-full py-2 rounded-lg text-white hover:bg-orange-600">
-Get Tickets
-</button>
+    <a href="{% url 'event_detail' event.id %}"
+       class="block w-full text-center bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">
+       Get Tickets
+    </a>
 
 </div>
-</div>
-
-
-
-<div class="bg-[#0b0b0b] border border-gray-800 rounded-xl overflow-hidden">
-
-<img src="{% static 'images/silent-disco.jpg' %}" class="w-full h-56 object-cover">
-
-<div class="p-6">
-
-<h3 class="text-xl font-semibold text-white mb-3">
-Silent Disco Party
-</h3>
-
-<p class="text-gray-400 text-sm mb-2">Coming Soon</p>
-<p class="text-gray-400 text-sm mb-4">G51 Rooftop Yaba</p>
-
-<button class="bg-orange-500 w-full py-2 rounded-lg text-white hover:bg-orange-600">
-Get Tickets
-</button>
+```
 
 </div>
-</div>
 
+{% empty %}
+
+<p class="text-gray-400">No events available yet.</p>
+
+{% endfor %}
 
 </div>
 </div>
