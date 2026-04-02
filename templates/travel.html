@@ -42,7 +42,13 @@
     <div class="bg-[#0b0b0b] text-white rounded-xl overflow-hidden border border-gray-800 hover:scale-105 transition">
 
         <!-- IMAGE -->
+        {% if package.image %}
         <img src="{{ package.image.url }}" class="w-full h-56 object-cover">
+        {% else %}
+        <div class="w-full h-56 bg-gray-800 flex items-center justify-center">
+            <span class="text-gray-400">No Image</span>
+        </div>
+        {% endif %}
 
         <!-- CONTENT -->
         <div class="p-6">
@@ -76,6 +82,10 @@
 
     </div>
 
+    {% empty %}
+    <p class="text-center text-gray-400 col-span-3">
+        No travel packages available yet.
+    </p>
     {% endfor %}
 
 </div>
