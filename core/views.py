@@ -1,27 +1,21 @@
-
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from events.models import Event
+from travel.models import TravelPackage, BlogPost
 
+
+def home(request):
+    events = Event.objects.all().order_by('-date')
+    trips = TravelPackage.objects.all().order_by('-id')
+
+    return render(request, 'home.html', {
+        'events': events,
+        'trips': trips
+    })
 
 
 def events(request):
     events = Event.objects.all()
     return render(request, 'events.html', {'events': events})
-
-from django.shortcuts import render, get_object_or_404
-from events.models import Event
-from travel.models import TravelPackage
-
-
-from events.models import Event
-
-def home(request):
-    events = Event.objects.all().order_by('-date')
-
-    return render(request, 'home.html', {
-    'events': events,
-    'trips': trips
-})
 
 
 def contact(request):
@@ -40,4 +34,3 @@ def blog_detail(request, id):
     return render(request, "blog_detail.html", {
         "post": post
     })
-
