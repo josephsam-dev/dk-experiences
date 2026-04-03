@@ -129,58 +129,35 @@ def download_ticket(request):
 
     return HttpResponse("Ticket not found")
 
-
-# =========================
-# BUY TICKET
-# =========================
-def buy_ticket(request, id):
-    ticket = get_object_or_404(Ticket, id=id)
-
-    if request.method == "POST":
-        email = request.POST.get("email")
-
-        url = "https://api.paystack.co/transaction/initialize"
-        headers = {
-            "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
-            "Content-Type": "application/json",
-        }
-
-        data = {
-            "email": email,
-            "amount": int(float(ticket.amount) * 100)
-        }
-
-        response = requests.post(url, json=data, headers=headers)
-        res_data = response.json()
-
-        if res_data.get("status"):
-            return redirect(res_data["data"]["authorization_url"])
-
-        return HttpResponse("Payment failed")
-
-    return render(request, "buy_ticket.html", {"ticket": ticket})
-
-
-from events.models import Event
-
-def event_tickets(request, event_id):
-    event = get_object_or_404(Event, id=event_id)
-    tickets = event.tickets.all()
-
-    return render(request, "event_tickets.html", {
-        "event": event,
-        "tickets": tickets
-    })
-
-
-from django.shortcuts import render
-from django.conf import settings   # ✅ ADD THIS
-
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.conf import settings
+from events.models import Event, Ticket
 
-def buy_ticket(request, ticket_id):
+
+# =========================
+# BUY TICKET (FINAL)
+# =========================
+def buy_ticket(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+
+    # 🔥 Get tickets for this event only
+    tickets = Ticket.objects.filter(event=event)
+
     return render(request, "travel/buy_ticket.html", {
-        "ticket_id": ticket_id,
+        "event": event,
+        "tickets": tickets,
         "paystack_public_key": settings.PAYSTACK_PUBLIC_KEY
     })
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import TravelPackage
+
+def travel_page(request):
+    packages = TravelPackage.objects.all()
+    return render(request, "travel.html", {"packages": packages})
+
+
+def travel_detail(request, id):
+    trip = get_object_or_404(TravelPackage, id=id)
+    return render(request, "travel_detail.html", {"trip": trip})

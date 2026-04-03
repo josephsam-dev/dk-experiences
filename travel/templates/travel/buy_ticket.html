@@ -13,7 +13,6 @@
 {% csrf_token %}
 
 <!-- NAME -->
-
 <div>
 <label class="block mb-2">Name</label>
 <input type="text" name="name" required
@@ -21,7 +20,6 @@ class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
 </div>
 
 <!-- EMAIL -->
-
 <div>
 <label class="block mb-2">Email</label>
 <input type="email" name="email" required
@@ -29,7 +27,6 @@ class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
 </div>
 
 <!-- PHONE -->
-
 <div>
 <label class="block mb-2">Phone</label>
 <input type="text" name="phone" required
@@ -37,27 +34,28 @@ class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
 </div>
 
 <!-- TICKET TYPE -->
-
 <div>
-<label class="block mb-2">Ticket Type</label>
+<label class="block mb-2">Select Ticket</label>
 
-<select name="category"
+<select id="ticketSelect"
 class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
 
-<option value="early">Early Bird - FREE</option>
-<option value="regular">Regular - ₦2,500</option>
-<option value="vip">VIP - ₦7,000</option>
-<option value="vvip">VVIP - ₦17,000</option>
+{% for ticket in tickets %}
+<option value="{{ ticket.id }}" data-price="{{ ticket.price }}">
+    {{ ticket.event.title }} - {{ ticket.category }} (₦{{ ticket.price }})
+</option>
+{% endfor %}
 
 </select>
+
 </div>
 
 <!-- BUTTON -->
-
 <button type="button"
 onclick="payWithPaystack()"
 class="w-full bg-orange-500 hover:bg-orange-600 py-3 rounded-lg font-semibold">
-Proceed to Payment </button>
+Proceed to Payment
+</button>
 
 </form>
 
@@ -66,7 +64,6 @@ Proceed to Payment </button>
 </section>
 
 <!-- PAYSTACK -->
-
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
 <script>
@@ -76,37 +73,31 @@ function payWithPaystack(){
 let name = document.querySelector("input[name='name']").value;
 let email = document.querySelector("input[name='email']").value;
 let phone = document.querySelector("input[name='phone']").value;
-let ticket = document.querySelector("select[name='category']").value;
 
-let amount = 0;
+let ticketSelect = document.getElementById("ticketSelect");
+let selectedOption = ticketSelect.options[ticketSelect.selectedIndex];
 
-// ✅ CORRECT PRICING
-if(ticket == "early"){
-    amount = 0;
-}
-else if(ticket == "regular"){
-    amount = 2500;
-}
-else if(ticket == "vip"){
-    amount = 7000;
-}
-else if(ticket == "vvip"){
-    amount = 17000;
-}
+let ticketId = selectedOption.value;
+let amount = parseInt(selectedOption.getAttribute("data-price"));
 
-// 🚨 VALIDATION
+// VALIDATION
 if(!name || !email || !phone){
     alert("Please fill all fields");
     return;
 }
 
-// 💳 PAYSTACK
+if(!amount){
+    alert("Please select a ticket");
+    return;
+}
+
+// PAYSTACK
 let handler = PaystackPop.setup({
 
-    key: "{{ paystack_public_key }}",   // ✅ FIXED (WITH COMMA)
+    key: "{{ paystack_public_key }}",
 
     email: email,
-    amount: amount * 100,   // kobo
+    amount: amount * 100,
     currency: "NGN",
 
     callback: function(response){
@@ -116,7 +107,7 @@ let handler = PaystackPop.setup({
         "&name=" + name +
         "&email=" + email +
         "&phone=" + phone +
-        "&ticket=" + ticket;
+        "&ticket_id=" + ticketId;
     },
 
     onClose: function(){

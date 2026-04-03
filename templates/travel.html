@@ -35,19 +35,17 @@
 </div>
 
 <!-- GRID -->
-<div class="grid md:grid-cols-3 gap-8">
+<div class="flex flex-wrap justify-center gap-8">
 
-    {% for package in packages %}
+{% for package in packages %}
+
+<div class="w-full max-w-sm">
 
     <div class="bg-[#0b0b0b] text-white rounded-xl overflow-hidden border border-gray-800 hover:scale-105 transition">
 
         <!-- IMAGE -->
         {% if package.image %}
         <img src="{{ package.image.url }}" class="w-full h-56 object-cover">
-        {% else %}
-        <div class="w-full h-56 bg-gray-800 flex items-center justify-center">
-            <span class="text-gray-400">No Image</span>
-        </div>
         {% endif %}
 
         <!-- CONTENT -->
@@ -61,12 +59,8 @@
                 {{ package.description|truncatewords:15 }}
             </p>
 
-            <p class="text-sm text-gray-400">
+            <p class="text-sm text-gray-400 mb-2">
                 📍 {{ package.location }}
-            </p>
-
-            <p class="text-sm text-gray-400 mb-4">
-                🕒 {{ package.duration }}
             </p>
 
             <p class="font-bold text-orange-500 text-lg mb-4">
@@ -82,14 +76,15 @@
 
     </div>
 
-    {% empty %}
-    <p class="text-center text-gray-400 col-span-3">
-        No travel packages available yet.
-    </p>
-    {% endfor %}
+</div>
+
+{% empty %}
+<p class="text-gray-400 text-center w-full">
+    No travel packages available yet.
+</p>
+{% endfor %}
 
 </div>
-```
 
 </div>
 

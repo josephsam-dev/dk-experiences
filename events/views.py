@@ -17,10 +17,18 @@ def events_page(request):
 # =========================
 # EVENT DETAIL
 # =========================
+from django.shortcuts import render, get_object_or_404
+from .models import Event, Ticket
+
 def event_detail(request, id):
     event = get_object_or_404(Event, id=id)
-    return render(request, "event_detail.html", {"event": event})
 
+    tickets = Ticket.objects.filter(event=event)
+
+    return render(request, "events/event_detail.html", {
+        "event": event,
+        "tickets": tickets
+    })
 
 # =========================
 # BUY TICKET (PAYSTACK)
