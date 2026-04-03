@@ -2,8 +2,7 @@
 from django.shortcuts import render
 from events.models import Event
 
-def home(request):
-    return render(request, 'home.html')
+
 
 def events(request):
     events = Event.objects.all()
@@ -11,7 +10,7 @@ def events(request):
 
 from django.shortcuts import render, get_object_or_404
 from events.models import Event
-from travel.models import BlogPost
+from travel.models import TravelPackage
 
 
 from events.models import Event
@@ -20,8 +19,9 @@ def home(request):
     events = Event.objects.all().order_by('-date')
 
     return render(request, 'home.html', {
-        'events': events
-    })
+    'events': events,
+    'trips': trips
+})
 
 
 def contact(request):
