@@ -22,4 +22,5 @@ urlpatterns = [
 
     # ❗ ALWAYS LAST
     path("<int:id>/", views.travel_detail, name="travel_detail"),
+    path("blog/<int:id>/", views.blog_detail, name="blog_detail"),
 ]
