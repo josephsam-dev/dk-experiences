@@ -159,3 +159,26 @@ def create_ticket(request):
         return redirect(res_data["data"]["authorization_url"])
 
     return HttpResponse("Invalid request")
+
+
+import qrcode
+from io import BytesIO
+import base64
+
+def booking_success(request):
+    reference = request.GET.get("reference")
+
+    ticket = Ticket.objects.filter(reference=reference).first()
+
+    qr_image = None
+
+    if ticket:
+        qr = qrcode.make(ticket.reference)
+        buffer = BytesIO()
+        qr.save(buffer, format="PNG")
+        qr_image = base64.b64encode(buffer.getvalue()).decode()
+
+    return render(request, "booking_success.html", {
+        "ticket": ticket,
+        "qr_code": qr_image
+    })
