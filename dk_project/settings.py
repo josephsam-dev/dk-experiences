@@ -2,10 +2,13 @@ print("SETTINGS LOADED SUCCESSFULLY")
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 import sys
 import logging
 import dj_database_url   
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv()
 
 DEBUG = True
 
@@ -70,10 +73,23 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'dk_project.wsgi.application'
-DATABASES = {
-    'default': dj_database_url.parse('postgresql://dk_database_lwus_user:TCRCtWJzwlTvHtZTaVRflnOZ2yv5LxOp@dpg-d782cdtm5p6s73ehask0-a/dk_database_lwus')
-}
+
+# Use PostgreSQL on Render, SQLite locally
+if os.environ.get("RENDER"):
+    DATABASES = {
+        'default': dj_database_url.parse(
+            'postgresql://dk_database_lwus_user:TCRCtWJzwlTvHtZTaVRflnOZ2yv5LxOp@dpg-d782cdtm5p6s73ehask0-a/dk_database_lwus'
+        )
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -87,3 +103,6 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
+
+
+PAYSTACK_SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY")

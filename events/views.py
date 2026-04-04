@@ -1,11 +1,12 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
-from django.conf import settings
+import json
+import uuid
 import requests
 
-from .models import Event, Ticket
+from django.shortcuts import render, redirect, get_object_or_404
+from django.conf import settings
 
-
+from .models import Event
+from core.models import Ticket
 # =========================
 # EVENTS PAGE
 # =========================
@@ -18,7 +19,8 @@ def events_page(request):
 # EVENT DETAIL
 # =========================
 from django.shortcuts import render, get_object_or_404
-from .models import Event, Ticket
+from .models import Event
+from core.models import Ticket
 
 def event_detail(request, id):
     event = get_object_or_404(Event, id=id)
@@ -94,9 +96,48 @@ def payment_success(request):
     return HttpResponse("Payment verification failed ❌")
 
 
-# =========================
-# BLOG (TEMP)
-# =========================
+import uuid
+import requests
+from django.shortcuts import render, redirect
+from django.conf import settings
+from core.models import Ticket
+
+
+def create_ticket(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        phone = request.POST.get("phone")
+        tickets = request.POST.get("tickets")
+        total = int(request.POST.get("total") or 0)
+
+        reference = str(uuid.uuid4())
+
+        ticket = Ticket.objects.create(
+            email=email,
+            phone=phone,
+            ticket_data=tickets,
+            total_amount=total,
+            reference=reference
+        )
+
+        url = "https://api.paystack.co/transaction/initialize"
+        headers = {
+            "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
+            "Content-Type": "application/json",
+        }
+
+        data = {
+            "email": email,
+            "amount": total * 100,
+            "reference": reference,
+            "callback_url": f"https://dkexperience.com.ng/verify/{reference}/"
+        }
+
+        response = requests.post(url, json=data, headers=headers)
+        res_data = response.json()
+
+        return redirect(res_data["data"]["authorization_url"])
+
 def blog(request):
-    posts = []
-    return render(request, "blog.html", {"posts": posts})
+    return render(request, "blog.html")

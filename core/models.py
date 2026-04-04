@@ -1,3 +1,17 @@
 from django.db import models
 
-# Create your models here.
+class Ticket(models.Model):
+    event = models.ForeignKey("events.Event", on_delete=models.CASCADE, null=True, blank=True)
+
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+
+    ticket_data = models.TextField()  # stores selected tickets JSON/string
+    total_amount = models.IntegerField()
+
+    reference = models.CharField(max_length=200)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email

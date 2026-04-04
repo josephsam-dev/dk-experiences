@@ -1,0 +1,46 @@
+def create_ticket(request):
+    if request.method == "POST":
+        try:
+            name = request.POST.get("name")
+            email = request.POST.get("email")
+            phone = request.POST.get("phone")
+            tickets = request.POST.get("tickets")
+            total = int(request.POST.get("total") or 0)
+
+            print("DEBUG:", name, email, phone, tickets, total)
+
+            reference = str(uuid.uuid4())
+
+            ticket = Ticket.objects.create(
+                email=email,
+                phone=phone,
+                ticket_data=tickets,
+                total_amount=total,
+                reference=reference
+            )
+
+            url = "https://api.paystack.co/transaction/initialize"
+            headers = {
+                "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
+                "Content-Type": "application/json",
+            }
+
+            data = {
+                "email": email,
+                "amount": total * 100,
+                "reference": reference,
+                "callback_url": f"http://127.0.0.1:8000/payment-success/?reference={reference}&ticket_id={ticket.id}"
+            }
+
+            response = requests.post(url, json=data, headers=headers)
+            res_data = response.json()
+
+            print("PAYSTACK:", res_data)
+
+            return redirect(res_data["data"]["authorization_url"])
+
+        except Exception as e:
+            print("ERROR:", e)
+            return HttpResponse(f"Error: {e}")
+
+    return redirect("events_page")

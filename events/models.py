@@ -16,24 +16,22 @@ class Event(models.Model):
 
 
 # ✅ TICKET
-class Ticket(models.Model):
-    category = models.CharField(max_length=100)
-    event = models.ForeignKey(
-    Event,
-    on_delete=models.CASCADE,
-    related_name="tickets"
-)
-    price = models.IntegerField()
-    quantity = models.IntegerField(default=1)
+import uuid
 
-    payment_reference = models.CharField(max_length=200, blank=True, null=True)
+class Ticket(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+
+    ticket_data = models.TextField()  # stores multiple tickets (JSON)
+    total_amount = models.IntegerField()
+
+    reference = models.CharField(max_length=100, unique=True, default=uuid.uuid4)
     paid = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.category} - {self.event.title}"
-
-
+        return self.email
+    
 # ✅ TRAVEL
 class TravelPackage(models.Model):
     title = models.CharField(max_length=200)

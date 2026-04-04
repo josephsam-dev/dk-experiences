@@ -5,67 +5,121 @@
 
 <div class="max-w-4xl mx-auto py-16 px-4">
 
-```
-<!-- EVENT BANNER -->
-<img src="{% static 'images/akoka-fest.jpg' %}" class="rounded-xl mb-6 w-full h-96 object-cover">
+    <!-- EVENT -->
+    <img src="{% static 'images/akoka-fest.jpg' %}" class="rounded-xl mb-6 w-full h-96 object-cover">
 
-<!-- EVENT TITLE -->
-<h1 class="text-3xl font-bold mb-4">
-    {{ event.title }}
-</h1>
+    <h1 class="text-3xl font-bold mb-4">{{ event.title }}</h1>
+    <p class="text-gray-600 mb-4">{{ event.description }}</p>
+    <p class="text-gray-500">📍 {{ event.location }}</p>
+    <p class="text-gray-500 mb-6">📅 {{ event.date }} | ⏰ {{ event.time }}</p>
 
-<!-- DESCRIPTION -->
-<p class="text-gray-600 mb-4">
-    {{ event.description }}
-</p>
+    <!-- FORM -->
+    <form method="POST" action="{% url 'create_ticket' %}">
+        {% csrf_token %}
 
-<!-- LOCATION -->
-<p class="text-gray-500">
-    📍 {{ event.location }}
-</p>
+        <!-- 🎟️ TICKETS -->
 
-<!-- DATE & TIME -->
-<p class="text-gray-500 mb-4">
-    📅 {{ event.date }} | ⏰ {{ event.time }}
-</p>
-
-<!-- BASE PRICE -->
-<p class="text-2xl font-bold text-yellow-500 mb-6">
-    ₦{{ event.price }}
-</p>
-
-<!-- TICKET TYPES -->
-<h2 class="text-2xl font-bold mt-10 mb-4">Available Tickets</h2>
-
-<div class="space-y-4">
-
-    {% for ticket in event.tickets.all %}
-
-    <div class="flex justify-between items-center border p-4 rounded-lg">
-
-        <div>
-            <h3 class="font-semibold">{{ ticket.category }}</h3>
-            <p class="text-gray-500">Available: {{ ticket.quantity }}</p>
+        <!-- EARLY -->
+        <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
+            <span>Early Bird (FREE)</span>
+            <div>
+                <button type="button" onclick="changeQty('early', -1)">-</button>
+                <span id="early-qty">0</span>
+                <button type="button" onclick="changeQty('early', 1)">+</button>
+            </div>
         </div>
 
-        <div class="flex items-center gap-4">
-
-            <span class="font-bold text-yellow-500">
-                ₦{{ ticket.price }}
-            </span>
-
-            <a href="{% url 'travel_buy_ticket' event.id %}"
-               class="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 text-sm">
-                Buy
-            </a>
-
+        <!-- REGULAR -->
+        <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
+            <span>Regular - ₦2,500</span>
+            <div>
+                <button type="button" onclick="changeQty('regular', -1)">-</button>
+                <span id="regular-qty">0</span>
+                <button type="button" onclick="changeQty('regular', 1)">+</button>
+            </div>
         </div>
 
-    </div>
+        <!-- VIP -->
+        <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
+            <span>VIP - ₦7,000</span>
+            <div>
+                <button type="button" onclick="changeQty('vip', -1)">-</button>
+                <span id="vip-qty">0</span>
+                <button type="button" onclick="changeQty('vip', 1)">+</button>
+            </div>
+        </div>
 
-    {% empty %}
-        <p>No tickets available for this event.</p>
-    {% endfor %}
+        <!-- VVIP -->
+        <div class="flex justify-between items-center border p-4 rounded-lg mb-6">
+            <span>VVIP - ₦17,000</span>
+            <div>
+                <button type="button" onclick="changeQty('vvip', -1)">-</button>
+                <span id="vvip-qty">0</span>
+                <button type="button" onclick="changeQty('vvip', 1)">+</button>
+            </div>
+        </div>
+
+        <!-- TOTAL -->
+        <div class="bg-gray-100 p-4 rounded-lg mb-6 flex justify-between">
+            <span>Total:</span>
+            <span>₦<span id="total">0</span></span>
+        </div>
+
+        <!-- USER -->
+        <input type="text" name="name" placeholder="Your Name" required class="w-full mb-3 p-3 border rounded">
+        <input type="email" name="email" placeholder="Email" required class="w-full mb-3 p-3 border rounded">
+        <input type="text" name="phone" placeholder="Phone" required class="w-full mb-6 p-3 border rounded">
+
+        <!-- HIDDEN -->
+        <input type="hidden" name="total" id="totalInput">
+        <input type="hidden" name="tickets" id="ticketsInput">
+
+        <!-- SUBMIT -->
+        <button type="submit" class="w-full bg-orange-500 text-white py-3 rounded-lg">
+            Get Tickets
+        </button>
+
+    </form>
 
 </div>
+
+<!-- JS -->
+<script>
+let prices = {
+    early: 0,
+    regular: 2500,
+    vip: 7000,
+    vvip: 17000
+};
+
+let qty = {
+    early: 0,
+    regular: 0,
+    vip: 0,
+    vvip: 0
+};
+
+function changeQty(type, change) {
+    qty[type] += change;
+
+    if (qty[type] < 0) qty[type] = 0;
+
+    document.getElementById(type + "-qty").innerText = qty[type];
+
+    updateTotal();
+}
+
+function updateTotal() {
+    let total = 0;
+
+    for (let key in qty) {
+        total += qty[key] * prices[key];
+    }
+
+    document.getElementById("total").innerText = total.toLocaleString();
+    document.getElementById("totalInput").value = total;
+    document.getElementById("ticketsInput").value = JSON.stringify(qty);
+}
+</script>
+
 {% endblock %}

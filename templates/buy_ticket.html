@@ -12,59 +12,58 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px; /* 🔥 space for mobile */
+            padding: 20px;
         }
 
         .card {
             background: #111;
-            padding: 50px 25px;   /* 🔥 taller card */
+            padding: 30px 20px;
             border-radius: 15px;
-            width: 320px;         /* 📱 phone width */
+            width: 320px;
             text-align: center;
             box-shadow: 0 0 25px rgba(0,0,0,0.6);
         }
 
         h2 {
-            font-size: 22px;
             margin-bottom: 15px;
         }
 
-        p {
-            margin-bottom: 25px;  /* 🔥 more space */
-            color: #ccc;
+        .ticket-item {
+            margin: 15px 0;
+        }
+
+        .ticket-item button {
+            padding: 5px 10px;
+            margin: 5px;
+        }
+
+        .qty {
+            margin: 0 10px;
         }
 
         input {
             width: 100%;
-            padding: 16px;        /* 🔥 bigger inputs */
-            margin-top: 20px;     /* 🔥 vertical spacing */
+            padding: 12px;
+            margin-top: 15px;
             border: none;
             border-radius: 8px;
-            font-size: 14px;
         }
 
-        button {
+        button[type="submit"] {
             width: 100%;
-            padding: 16px;
-            margin-top: 25px;     /* 🔥 pushes button down */
+            padding: 14px;
+            margin-top: 20px;
             background: orange;
             border: none;
             color: white;
             font-weight: bold;
             border-radius: 8px;
-            font-size: 15px;
             cursor: pointer;
         }
 
-        button:hover {
-            opacity: 0.9;
-        }
-
-        /* 🔥 MOBILE RESPONSIVE BOOST */
-        @media (max-width: 480px) {
-            .card {
-                width: 100%;
-            }
+        #totalAmount {
+            font-weight: bold;
+            color: orange;
         }
     </style>
 </head>
@@ -72,21 +71,94 @@
 <body>
 
 <div class="card">
-    <h2>{{ ticket.category }}</h2>
-    <p>Price: ₦{{ ticket.price }}</p>
 
-    <form method="POST">
+    <h2>Select Tickets</h2>
+
+    <!-- 🎟️ TICKETS -->
+    <!-- 🎟️ TICKETS -->
+
+<div class="ticket-item" data-type="Early Bird" data-price="2500">
+    <p>Early Bird - ₦2,500</p>
+    <button type="button" onclick="changeQty(this, -1)">-</button>
+    <span class="qty">0</span>
+    <button type="button" onclick="changeQty(this, 1)">+</button>
+</div>
+
+<div class="ticket-item" data-type="VIP" data-price="7000">
+    <p>VIP - ₦7,000</p>
+    <button type="button" onclick="changeQty(this, -1)">-</button>
+    <span class="qty">0</span>
+    <button type="button" onclick="changeQty(this, 1)">+</button>
+</div>
+
+<div class="ticket-item" data-type="VVIP" data-price="17000">
+    <p>VVIP - ₦17,000</p>
+    <button type="button" onclick="changeQty(this, -1)">-</button>
+    <span class="qty">0</span>
+    <button type="button" onclick="changeQty(this, 1)">+</button>
+</div>
+    <!-- 💰 TOTAL -->
+    <p>Total: <span id="totalAmount">NGN 0</span></p>
+
+    <!-- 🧾 FORM -->
+    <form method="POST" action="{% url 'create_ticket' %}">
         {% csrf_token %}
 
         <input type="text" name="name" placeholder="Full Name" required>
-
         <input type="email" name="email" placeholder="Email Address" required>
-
         <input type="text" name="phone" placeholder="Phone Number" required>
 
-        <button type="submit">Proceed to Payment</button>
+        <input type="hidden" name="tickets" id="tickets_input">
+        <input type="hidden" name="total" id="total_input">
+
+        <button type="submit" onclick="prepareTicketData()">Proceed to Payment</button>
     </form>
+
 </div>
+
+<script>
+let total = 0;
+
+function changeQty(button, change) {
+    let item = button.parentElement;
+    let qtyEl = item.querySelector(".qty");
+    let price = parseInt(item.dataset.price);
+
+    let qty = parseInt(qtyEl.innerText);
+    qty += change;
+
+    if (qty < 0) qty = 0;
+
+    total += change * price;
+    if (total < 0) total = 0;
+
+    qtyEl.innerText = qty;
+    updateTotal();
+}
+
+function updateTotal() {
+    document.getElementById("totalAmount").innerText = "NGN " + total;
+}
+
+function prepareTicketData() {
+    let tickets = [];
+
+    document.querySelectorAll(".ticket-item").forEach(item => {
+        let qty = parseInt(item.querySelector(".qty").innerText);
+
+        if (qty > 0) {
+            tickets.push({
+                type: item.dataset.type,
+                quantity: qty,
+                price: item.dataset.price
+            });
+        }
+    });
+
+    document.getElementById("tickets_input").value = JSON.stringify(tickets);
+    document.getElementById("total_input").value = total;
+}
+</script>
 
 </body>
 </html>
