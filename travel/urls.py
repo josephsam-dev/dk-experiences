@@ -21,4 +21,5 @@ urlpatterns = [
     path("buy-ticket/<int:event_id>/", views.buy_ticket, name="travel_buy_ticket"),
     path('', views.travel_page, name='travel'),
     path('<int:id>/', views.travel_detail, name='travel_detail'),
+    path("blog/", views.blog, name="blog"),
 ]
