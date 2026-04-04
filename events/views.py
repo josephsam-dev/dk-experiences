@@ -112,6 +112,7 @@ def create_ticket(request):
         phone = request.POST.get("phone")
         tickets = request.POST.get("tickets")
         total = int(request.POST.get("total") or 0)
+            
 
         reference = str(uuid.uuid4())
 
@@ -149,7 +150,5 @@ def create_ticket(request):
     return HttpResponse("Invalid request")
 
 
-def blog(request):
-    return render(request, "blog.html")
 
 
