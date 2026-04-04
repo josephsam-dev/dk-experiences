@@ -147,3 +147,9 @@ def create_ticket(request):
         return redirect(res_data["data"]["authorization_url"])
 
     return HttpResponse("Invalid request")
+
+
+def blog(request):
+    return render(request, "blog.html")
+
+
