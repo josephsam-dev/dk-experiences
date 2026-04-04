@@ -24,6 +24,10 @@ def contact(request):
 
 def blog(request):
     posts = BlogPost.objects.all().order_by('-id')
+
+    print("DEBUG POSTS COUNT:", posts.count())
+    print("DEBUG POSTS:", posts)
+
     return render(request, "blog.html", {
         "posts": posts
     })
