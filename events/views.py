@@ -103,6 +103,8 @@ from django.conf import settings
 from core.models import Ticket
 
 
+from django.http import HttpResponse
+
 def create_ticket(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -131,13 +133,17 @@ def create_ticket(request):
             "email": email,
             "amount": total * 100,
             "reference": reference,
-            "callback_url": f"https://dkexperience.com.ng/verify/{reference}/"
+            "callback_url": f"https://dkexperience.com.ng/payment-success/?reference={reference}&ticket_id={ticket.id}"
         }
 
         response = requests.post(url, json=data, headers=headers)
         res_data = response.json()
 
+        # ✅ HANDLE ERROR (THIS IS THE FIX)
+        if not res_data.get("status"):
+            return HttpResponse(f"Paystack Error: {res_data}")
+
+        # ✅ SUCCESS
         return redirect(res_data["data"]["authorization_url"])
 
-def blog(request):
-    return render(request, "blog.html")
+    return HttpResponse("Invalid request")
