@@ -112,10 +112,23 @@ def create_ticket(request):
         phone = request.POST.get("phone")
         tickets = request.POST.get("tickets")
         total = int(request.POST.get("total") or 0)
-            
 
         reference = str(uuid.uuid4())
 
+        # ✅ FREE TICKET (SKIP PAYSTACK)
+        if total == 0:
+            ticket = Ticket.objects.create(
+                email=email,
+                phone=phone,
+                ticket_data=tickets,
+                total_amount=0,
+                reference=reference,
+                paid=True
+            )
+
+            return redirect(f"/events/booking-success/?reference={reference}")
+
+        # 💳 PAID TICKET
         ticket = Ticket.objects.create(
             email=email,
             phone=phone,
@@ -134,21 +147,15 @@ def create_ticket(request):
             "email": email,
             "amount": total * 100,
             "reference": reference,
-            "callback_url": f"https://dkexperience.com.ng/payment-success/?reference={reference}&ticket_id={ticket.id}"
+            "callback_url": f"https://dkexperience.com.ng/events/booking-success/?reference={reference}"
         }
 
         response = requests.post(url, json=data, headers=headers)
         res_data = response.json()
 
-        # ✅ HANDLE ERROR (THIS IS THE FIX)
         if not res_data.get("status"):
             return HttpResponse(f"Paystack Error: {res_data}")
 
-        # ✅ SUCCESS
         return redirect(res_data["data"]["authorization_url"])
 
     return HttpResponse("Invalid request")
-
-
-
-
