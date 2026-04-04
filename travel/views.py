@@ -104,10 +104,27 @@ def verify_payment(request):
 # =========================
 # SUCCESS
 # =========================
-def booking_success(request):
-    reference = request.GET.get("reference")
-    return render(request, "booking_success.html", {"reference": reference})
+import qrcode
+from io import BytesIO
+import base64
 
+def booking_success(request):
+    reference = request.GET.get('reference')
+
+    ticket = Ticket.objects.filter(reference=reference).first()
+
+    qr_image = None
+
+    if ticket:
+        qr = qrcode.make(ticket.reference)
+        buffer = BytesIO()
+        qr.save(buffer, format="PNG")
+        qr_image = base64.b64encode(buffer.getvalue()).decode()
+
+    return render(request, "booking_success.html", {
+        "ticket": ticket,
+        "qr_code": qr_image
+    })
 
 # =========================
 # VERIFY TICKET
