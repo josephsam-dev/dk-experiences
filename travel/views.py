@@ -27,7 +27,7 @@ def travel_detail(request, id):
 # =========================
 # BLOG
 # =========================
-def blog_page(request):
+def blog(request):
     posts = BlogPost.objects.all().order_by("-created_at")
     return render(request, "blog.html", {"posts": posts})
 
