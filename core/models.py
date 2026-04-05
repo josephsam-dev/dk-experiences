@@ -10,6 +10,7 @@ class Ticket(models.Model):
     total_amount = models.IntegerField()
 
     reference = models.CharField(max_length=200)
+    used = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
 

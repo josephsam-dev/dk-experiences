@@ -10,4 +10,5 @@ urlpatterns = [
     path('create-ticket/', views.create_ticket, name='create_ticket'),
     path('events/<int:id>/', views.event_detail, name='event_detail'),
     path("booking-success/", views.booking_success, name="booking_success"),
+    path("verify-ticket/<str:reference>/", views.verify_ticket, name="verify_ticket"),
 ]

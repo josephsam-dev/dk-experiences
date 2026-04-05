@@ -173,7 +173,8 @@ def booking_success(request):
     qr_image = None
 
     if ticket:
-        qr = qrcode.make(ticket.reference)
+        verify_url = f"https://dkexperience.com.ng/events/verify-ticket/{ticket.reference}/"
+        qr = qrcode.make(verify_url)
         buffer = BytesIO()
         qr.save(buffer, format="PNG")
         qr_image = base64.b64encode(buffer.getvalue()).decode()
@@ -182,3 +183,35 @@ def booking_success(request):
         "ticket": ticket,
         "qr_code": qr_image
     })
+
+def verify_ticket(request, reference):
+    ticket = Ticket.objects.filter(reference=reference).first()
+
+    if not ticket:
+        return render(request, "verify_result.html", {
+            "status": "invalid"
+        })
+
+    if not ticket.paid:
+        return render(request, "verify_result.html", {
+            "status": "unpaid",
+            "ticket": ticket
+        })
+
+    # OPTIONAL: prevent reuse
+    if hasattr(ticket, "used") and ticket.used:
+        return render(request, "verify_result.html", {
+            "status": "used",
+            "ticket": ticket
+        })
+
+    # mark as used
+    if hasattr(ticket, "used"):
+        ticket.used = True
+        ticket.save()
+
+    return render(request, "verify_result.html", {
+        "status": "valid",
+        "ticket": ticket
+    })
+    

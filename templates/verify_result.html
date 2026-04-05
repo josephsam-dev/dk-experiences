@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ticket Verification</title>
+</head>
+<body style="text-align:center; font-family:sans-serif;">
+
+    {% if status == "valid" %}
+        <h1 style="color:green;">✅ VALID TICKET</h1>
+        <p>{{ ticket.email }}</p>
+
+    {% elif status == "used" %}
+        <h1 style="color:orange;">⚠️ ALREADY USED</h1>
+
+    {% elif status == "unpaid" %}
+        <h1 style="color:red;">❌ NOT PAID</h1>
+
+    {% else %}
+        <h1 style="color:red;">❌ INVALID TICKET</h1>
+    {% endif %}
+
+</body>
+</html>
