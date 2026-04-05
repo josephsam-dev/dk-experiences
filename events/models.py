@@ -1,7 +1,10 @@
 from django.db import models
+import uuid
 
 
-# ✅ EVENT
+# =========================
+# ✅ EVENT MODEL
+# =========================
 class Event(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -15,30 +18,36 @@ class Event(models.Model):
         return self.title
 
 
-# ✅ TICKET
-import uuid
-
+# =========================
+# ✅ TICKET MODEL
+# =========================
 class Ticket(models.Model):
-    name = models.CharField(max_length=200)
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="tickets"
+    )
+
+    name = models.CharField(max_length=200, null=True, blank=True)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
 
-    ticket_data = models.TextField()  # stores multiple tickets (JSON)
+    ticket_data = models.TextField()
     total_amount = models.IntegerField()
 
-    reference = models.CharField(max_length=100, unique=True, default=uuid.uuid4)
+    reference = models.CharField(
+        max_length=100,
+        unique=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+
     paid = models.BooleanField(default=False)
+    used = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return self.email
-    
-# ✅ TRAVEL
-class TravelPackage(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    location = models.CharField(max_length=200)
-    price = models.IntegerField()
-    image = models.ImageField(upload_to='travel/')
-
-    def __str__(self):
-        return self.title

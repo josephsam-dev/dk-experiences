@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 
 from .models import Event
-from core.models import Ticket
+from .models import Ticket
 # =========================
 # EVENTS PAGE
 # =========================
@@ -20,7 +20,7 @@ def events_page(request):
 # =========================
 from django.shortcuts import render, get_object_or_404
 from .models import Event
-from core.models import Ticket
+from .models import Ticket
 
 def event_detail(request, id):
     event = get_object_or_404(Event, id=id)
@@ -100,7 +100,7 @@ import uuid
 import requests
 from django.shortcuts import render, redirect
 from django.conf import settings
-from core.models import Ticket
+from .models import Ticket
 
 
 from django.http import HttpResponse

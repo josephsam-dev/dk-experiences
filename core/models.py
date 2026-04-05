@@ -20,7 +20,7 @@ class Ticket(models.Model):
         return self.email
     
 from django.http import JsonResponse
-from core.models import Ticket
+from .models import Ticket
 
 def verify_ticket(request, reference):
     try:
