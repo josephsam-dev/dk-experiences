@@ -11,11 +11,9 @@ class EventAdmin(admin.ModelAdmin):
 
 # ✅ TICKET ADMIN (UPGRADED 🔥)
 class TicketAdmin(admin.ModelAdmin):
-    list_display = ("email", "phone", "total_amount", "reference", "created_at")
+    list_display = ("email", "phone", "total_amount", "reference")
     search_fields = ("email", "reference")
-    list_filter = ("created_at",)
     readonly_fields = ("reference",)
-
 
 # ✅ REGISTER
 admin.site.register(Event, EventAdmin)
