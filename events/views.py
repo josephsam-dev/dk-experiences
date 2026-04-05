@@ -215,3 +215,27 @@ def verify_ticket(request, reference):
         "ticket": ticket
     })
     
+
+    import qrcode
+from io import BytesIO
+import base64
+
+def booking_success(request):
+    reference = request.GET.get("reference")
+    ticket = Ticket.objects.filter(reference=reference).first()
+
+    qr_image = None
+
+    if ticket:
+        verify_url = f"https://dkexperience.com.ng/events/verify-ticket/{ticket.reference}/"
+
+        qr = qrcode.make(verify_url)
+        buffer = BytesIO()
+        qr.save(buffer, format="PNG")
+
+        qr_image = base64.b64encode(buffer.getvalue()).decode()
+
+    return render(request, "booking_success.html", {
+        "ticket": ticket,
+        "qr_image": qr_image
+    })

@@ -18,3 +18,31 @@ class Ticket(models.Model):
 
     def __str__(self):
         return self.email
+    
+from django.http import JsonResponse
+from core.models import Ticket
+
+def verify_ticket(request, reference):
+    try:
+        ticket = Ticket.objects.get(reference=reference)
+
+        if ticket.used:
+            return JsonResponse({
+                "status": "used",
+                "message": "⚠️ Ticket already used"
+            })
+
+        # mark as used
+        ticket.used = True
+        ticket.save()
+
+        return JsonResponse({
+            "status": "valid",
+            "message": "✅ Ticket is valid"
+        })
+
+    except Ticket.DoesNotExist:
+        return JsonResponse({
+            "status": "invalid",
+            "message": "❌ Invalid ticket"
+        })
