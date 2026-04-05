@@ -158,7 +158,7 @@ def create_ticket(request):
 
         return redirect(res_data["data"]["authorization_url"])
 
-    return HttpResponse("Invalid request")
+    return redirect("/")
 
 
 import qrcode
