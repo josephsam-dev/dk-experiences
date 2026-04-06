@@ -21,11 +21,11 @@
 
         <!-- EARLY -->
         <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
-            <span>Early Bird (FREE)</span>
+            <span class="text-red-500 font-bold">Early Bird (SOLD OUT)</span>
             <div>
                 <button type="button" onclick="changeQty('early', -1)">-</button>
                 <span id="early-qty">0</span>
-                <button type="button" onclick="changeQty('early', 1)">+</button>
+                <button type="button" disabled class="opacity-50 cursor-not-allowed">+</button>
             </div>
         </div>
 
@@ -39,20 +39,20 @@
             </div>
         </div>
 
-        <!-- VIP -->
-        <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
-            <span>VIP - ₦7,000</span>
-            <div>
+    
+        
+            
+           
                 <button type="button" onclick="changeQty('vip', -1)">-</button>
                 <span id="vip-qty">0</span>
                 <button type="button" onclick="changeQty('vip', 1)">+</button>
             </div>
         </div>
 
-        <!-- VVIP -->
-        <div class="flex justify-between items-center border p-4 rounded-lg mb-6">
-            <span>VVIP - ₦17,000</span>
-            <div>
+        
+       
+          
+            
                 <button type="button" onclick="changeQty('vvip', -1)">-</button>
                 <span id="vvip-qty">0</span>
                 <button type="button" onclick="changeQty('vvip', 1)">+</button>
@@ -84,19 +84,15 @@
 </div>
 
 <!-- JS -->
-<script>
 let prices = {
     early: 0,
-    regular: 2500,
-    vip: 7000,
-    vvip: 17000
+    regular: {{ event.price }}
 };
 
 let qty = {
     early: 0,
     regular: 0,
-    vip: 0,
-    vvip: 0
+  
 };
 
 function changeQty(type, change) {
