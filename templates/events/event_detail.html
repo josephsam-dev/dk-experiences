@@ -6,8 +6,6 @@
 <div class="max-w-4xl mx-auto py-16 px-4">
 
     <!-- EVENT -->
-    
-
     <h1 class="text-3xl font-bold mb-4">{{ event.title }}</h1>
     <p class="text-gray-600 mb-4">{{ event.description }}</p>
     <p class="text-gray-500">📍 {{ event.location }}</p>
@@ -39,25 +37,29 @@
             </div>
         </div>
 
-    
-        
-            
-           
+        {% if event.title == "AKOKA FEST" %}
+
+        <!-- VIP -->
+        <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
+            <span>VIP - ₦7,000</span>
+            <div>
                 <button type="button" onclick="changeQty('vip', -1)">-</button>
                 <span id="vip-qty">0</span>
                 <button type="button" onclick="changeQty('vip', 1)">+</button>
             </div>
         </div>
 
-        
-       
-          
-            
+        <!-- VVIP -->
+        <div class="flex justify-between items-center border p-4 rounded-lg mb-6">
+            <span>VVIP - ₦25,000</span>
+            <div>
                 <button type="button" onclick="changeQty('vvip', -1)">-</button>
                 <span id="vvip-qty">0</span>
                 <button type="button" onclick="changeQty('vvip', 1)">+</button>
             </div>
         </div>
+
+        {% endif %}
 
         <!-- TOTAL -->
         <div class="bg-gray-100 p-4 rounded-lg mb-6 flex justify-between">
@@ -78,29 +80,30 @@
         <button type="submit" class="w-full bg-orange-500 text-white py-3 rounded-lg">
             Get Tickets
         </button>
-
-    </form>
-
+</form>
 </div>
 
-<!-- JS -->
-let prices = {
-    early: 0,
-    regular: {{ event.price }}
+<script>
+const eventData = JSON.parse(document.getElementById('event-data').textContent);
+
+const ticketData = {
+    early: { price: 0, qty: 0 },
+    regular: { price: eventData.price, qty: 0 }
 };
 
-let qty = {
-    early: 0,
-    regular: 0,
-  
-};
+if (eventData.isAkoka) {
+    ticketData.vip = { price: 7000, qty: 0 };
+    ticketData.vvip = { price: 25000, qty: 0 };
+}
 
-function changeQty(type, change) {
-    qty[type] += change;
+function changeQty(type, delta) {
+    if (!ticketData[type]) return;
 
-    if (qty[type] < 0) qty[type] = 0;
+    const newQty = ticketData[type].qty + delta;
+    if (newQty < 0) return;
 
-    document.getElementById(type + "-qty").innerText = qty[type];
+    ticketData[type].qty = newQty;
+    document.getElementById(`${type}-qty`).innerText = newQty;
 
     updateTotal();
 }
@@ -108,14 +111,27 @@ function changeQty(type, change) {
 function updateTotal() {
     let total = 0;
 
-    for (let key in qty) {
-        total += qty[key] * prices[key];
+    for (const key in ticketData) {
+        total += ticketData[key].price * ticketData[key].qty;
     }
 
-    document.getElementById("total").innerText = total.toLocaleString();
-    document.getElementById("totalInput").value = total;
-    document.getElementById("ticketsInput").value = JSON.stringify(qty);
+    document.getElementById('total').innerText = total.toLocaleString();
+    document.getElementById('totalInput').value = total;
+}
+
+function prepareTicketData() {
+    const tickets = [];
+
+    for (const key in ticketData) {
+        if (ticketData[key].qty > 0) {
+            tickets.push({
+                category: key,
+                price: ticketData[key].price,
+                quantity: ticketData[key].qty
+            });
+        }
+    }
+
+    document.getElementById('ticketsInput').value = JSON.stringify(tickets);
 }
 </script>
-
-{% endblock %}
