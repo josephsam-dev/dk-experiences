@@ -83,56 +83,68 @@
 </form>
 </div>
 
-<script>
-const eventData = JSON.parse(document.getElementById('event-data').textContent);
-
-const ticketData = {
-    early: { price: 0, qty: 0 },
-    regular: { price: eventData.price, qty: 0 }
-};
-
-if (eventData.isAkoka) {
-    ticketData.vip = { price: 7000, qty: 0 };
-    ticketData.vvip = { price: 25000, qty: 0 };
-}
-
-function changeQty(type, delta) {
-    if (!ticketData[type]) return;
-
-    const newQty = ticketData[type].qty + delta;
-    if (newQty < 0) return;
-
-    ticketData[type].qty = newQty;
-    document.getElementById(`${type}-qty`).innerText = newQty;
-
-    updateTotal();
-}
-
-function updateTotal() {
-    let total = 0;
-
-    for (const key in ticketData) {
-        total += ticketData[key].price * ticketData[key].qty;
-    }
-
-    document.getElementById('total').innerText = total.toLocaleString();
-    document.getElementById('totalInput').value = total;
-}
-
-function prepareTicketData() {
-    const tickets = [];
-
-    for (const key in ticketData) {
-        if (ticketData[key].qty > 0) {
-            tickets.push({
-                category: key,
-                price: ticketData[key].price,
-                quantity: ticketData[key].qty
-            });
-        }
-    }
-
-    document.getElementById('ticketsInput').value = JSON.stringify(tickets);
+<script id="event-data" type="application/json">
+{
+    "price": {{ event.price }},
+    "isAkoka": {% if event.title == "AKOKA FEST" %}true{% else %}false{% endif %}
 }
 </script>
-{% endblock %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const eventData = JSON.parse(document.getElementById('event-data').textContent);
+
+    const ticketData = {
+        early: { price: 0, qty: 0 },
+        regular: { price: eventData.price, qty: 0 }
+    };
+
+    if (eventData.isAkoka) {
+        ticketData.vip = { price: 7000, qty: 0 };
+        ticketData.vvip = { price: 25000, qty: 0 };
+    }
+
+    window.changeQty = function(type, delta) {
+        if (!ticketData[type]) return;
+
+        const newQty = ticketData[type].qty + delta;
+        if (newQty < 0) return;
+
+        ticketData[type].qty = newQty;
+
+        const el = document.getElementById(type + "-qty");
+        if (el) el.innerText = newQty;
+
+        updateTotal();
+    };
+
+    function updateTotal() {
+        let total = 0;
+
+        for (const key in ticketData) {
+            total += ticketData[key].price * ticketData[key].qty;
+        }
+
+        document.getElementById('total').innerText = total.toLocaleString();
+        document.getElementById('totalInput').value = total;
+    }
+
+    window.prepareTicketData = function() {
+        const tickets = [];
+
+        for (const key in ticketData) {
+            if (ticketData[key].qty > 0) {
+                tickets.push({
+                    category: key,
+                    price: ticketData[key].price,
+                    quantity: ticketData[key].qty
+                });
+            }
+        }
+
+        document.getElementById('ticketsInput').value = JSON.stringify(tickets);
+    };
+
+});
+</script>
