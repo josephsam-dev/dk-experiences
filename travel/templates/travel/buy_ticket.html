@@ -52,7 +52,6 @@ Proceed to Payment
 </div>
 
 </section>
-
 <!-- PAYSTACK -->
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
@@ -61,18 +60,14 @@ function payWithPaystack() {
 
     let name = document.querySelector("input[type='text']").value;
     let email = document.querySelector("input[type='email']").value;
-    let phone = document.querySelector("input[type='tel']").value;
+    let phone = document.querySelector("input[name='phone']").value;
 
-   let amount = "{{ package.price }}";
-let ticketId = "{{ package.id }}";
+    let amount = "{{ package.price }}";
+    let ticketId = "{{ package.id }}";
 
+    // VALIDATION
     if (!name || !email || !phone) {
         alert("Please fill all fields");
-        return;
-    }
-
-    if (!amount) {
-        alert("Please select a ticket");
         return;
     }
 
@@ -82,58 +77,22 @@ let ticketId = "{{ package.id }}";
         amount: amount * 100,
         currency: "NGN",
 
-        callback: function(response) {
+        callback: function(response){
             window.location.href =
                 "/travel/verify-payment/?reference=" + response.reference +
                 "&name=" + name +
                 "&email=" + email +
                 "&phone=" + phone +
                 "&ticket_id=" + ticketId;
-        }, 
+        },
 
-        onClose: function() {
+        onClose: function(){
             alert("Payment cancelled");
         }
     });
 
     handler.openIframe();
 }
-</script>
-
-if(!amount){
-    alert("Please select a ticket");
-    return;
-}
-
-// PAYSTACK
-let handler = PaystackPop.setup({
-
-    key: "{{ paystack_public_key }}",
-
-    email: email,
-    amount: amount * 100,
-    currency: "NGN",
-
-    callback: function(response){
-
-        window.location.href =
-        "/travel/verify-payment/?reference=" + response.reference +
-        "&name=" + name +
-        "&email=" + email +
-        "&phone=" + phone +
-        "&ticket_id=" + ticketId;
-    },
-
-    onClose: function(){
-        alert("Payment cancelled");
-    }
-
-});
-
-handler.openIframe();
-
-}
-
 </script>
 
 {% endblock %}
