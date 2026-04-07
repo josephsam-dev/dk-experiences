@@ -17,15 +17,15 @@
 
         <!-- 🎟️ TICKETS -->
 
-        <!-- EARLY -->
-        <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
-            <span class="text-red-500 font-bold">Early Bird (SOLD OUT)</span>
-            <div>
-                <button type="button" onclick="changeQty('early', -1)">-</button>
-                <span id="early-qty">0</span>
-                <button type="button" disabled class="opacity-50 cursor-not-allowed">+</button>
-            </div>
-        </div>
+       <!-- PREMIUM -->
+<div class="flex justify-between items-center border p-4 rounded-lg mb-3">
+    <span class="text-green-500 font-bold">Premium - ₦21,000</span>
+    <div>
+        <button type="button" onclick="changeQty('premium', -1)">-</button>
+        <span id="premium-qty">0</span>
+        <button type="button" onclick="changeQty('premium', 1)">+</button>
+    </div>
+</div>
 
         <!-- REGULAR -->
         <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
