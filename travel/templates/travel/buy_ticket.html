@@ -42,7 +42,7 @@ class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
 
 {% for ticket in tickets %}
 <option value="{{ ticket.id }}" data-price="{{ ticket.price }}">
-    {{ ticket.event.title }} - {{ ticket.category }} (₦{{ ticket.price }})
+    {{ ticket.name }} - ₦{{ ticket.price }}
 </option>
 {% endfor %}
 

@@ -156,14 +156,15 @@ from events.models import Event, Ticket
 # =========================
 # BUY TICKET (FINAL)
 # =========================
-def buy_ticket(request, event_id):
-    event = get_object_or_404(Event, id=event_id)
+from .models import TravelPackage, Ticket
 
-    # 🔥 Get tickets for this event only
-    tickets = Ticket.objects.filter(event=event)
+def buy_ticket(request, event_id):
+    package = get_object_or_404(TravelPackage, id=event_id)
+
+    tickets = Ticket.objects.filter(package=package)  # 👈 FIX
 
     return render(request, "travel/buy_ticket.html", {
-        "event": event,
+        "package": package,
         "tickets": tickets,
         "paystack_public_key": settings.PAYSTACK_PUBLIC_KEY
     })
