@@ -28,12 +28,14 @@
 </p>
 
 
-<a href="{% url 'book_travel' package.id %}" 
+<a href="/travel/buy-ticket/{{ package.id }}/" 
+   class="bg-black text-white px-6 py-3 rounded-lg inline-block">
+   Proceed To Booking
+</a> 
 
-<a href="/travel/buy-ticket/{{ package.id }}/">
->>>>>>> 2ac0cf1 (fresh clean commit without secrets)
-class="bg-black text-white px-6 py-3 rounded-lg inline-block">
-Proceed To Booking
+<a href="/travel/buy-ticket/{{ package.id }}/" 
+   class="bg-black text-white px-6 py-3 rounded-lg inline-block">
+   Proceed To Booking
 </a>
 
 </div>
