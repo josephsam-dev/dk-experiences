@@ -38,13 +38,15 @@ class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
 <label class="block mb-2">Select Ticket</label>
 
 <select id="ticketSelect"
-class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
+    class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
 
-{% for ticket in tickets %}
-<option value="{{ ticket.id }}" data-price="{{ ticket.price }}">
-    {{ ticket.name }} - ₦{{ ticket.price }}
-</option>
-{% endfor %}
+    <option value="">Select Ticket</option>
+
+    {% for ticket in tickets %}
+    <option value="{{ ticket.price }}" data-id="{{ ticket.id }}">
+        {{ ticket.name }} - ₦{{ ticket.price }}
+    </option>
+    {% endfor %}
 
 </select>
 
@@ -67,24 +69,49 @@ Proceed to Payment
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
 <script>
+function payWithPaystack() {
 
-function payWithPaystack(){
+    let name = document.querySelector("input[type='text']").value;
+    let email = document.querySelector("input[type='email']").value;
+    let phone = document.querySelector("input[type='tel']").value;
 
-let name = document.querySelector("input[name='name']").value;
-let email = document.querySelector("input[name='email']").value;
-let phone = document.querySelector("input[name='phone']").value;
+    let ticketSelect = document.getElementById("ticketSelect");
+    let amount = ticketSelect.value;
+    let ticketId = ticketSelect.options[ticketSelect.selectedIndex]?.dataset.id;
 
-let ticketSelect = document.getElementById("ticketSelect");
-let selectedOption = ticketSelect.options[ticketSelect.selectedIndex];
+    if (!name || !email || !phone) {
+        alert("Please fill all fields");
+        return;
+    }
 
-let ticketId = selectedOption.value;
-let amount = parseInt(selectedOption.getAttribute("data-price"));
+    if (!amount) {
+        alert("Please select a ticket");
+        return;
+    }
 
-// VALIDATION
-if(!name || !email || !phone){
-    alert("Please fill all fields");
-    return;
+    let handler = PaystackPop.setup({
+        key: "{{ paystack_public_key }}",
+        email: email,
+        amount: amount * 100,
+        currency: "NGN",
+
+        callback: function(response) {
+            window.location.href =
+                "/travel/verify-payment/?reference=" + response.reference +
+                "&name=" + name +
+                "&email=" + email +
+                "&phone=" + phone +
+                "&ticket_id=" + ticketId;
+        },
+
+        onClose: function() {
+            alert("Payment cancelled");
+        }
+    });
+
+    handler.openIframe();
 }
+</script>
 
 if(!amount){
     alert("Please select a ticket");
