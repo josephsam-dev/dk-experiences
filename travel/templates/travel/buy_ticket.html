@@ -57,10 +57,10 @@ Proceed to Payment
 
 <script>
 function payWithPaystack() {
-    alert("CLICK WORKING");
+    console.log("Paystack starting...");
 
-    let name = document.querySelector("input[type='text']").value;
-    let email = document.querySelector("input[type='email']").value;
+    let name = document.querySelector("input[name='name']").value;
+    let email = document.querySelector("input[name='email']").value;
     let phone = document.querySelector("input[name='phone']").value;
 
     let amount = "{{ package.price }}";
