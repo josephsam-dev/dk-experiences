@@ -161,7 +161,7 @@ from .models import TravelPackage, Ticket
 def buy_ticket(request, event_id):
     package = get_object_or_404(TravelPackage, id=event_id)
 
-    tickets = Ticket.objects.filter(package=package)  # 👈 FIX
+    tickets = Ticket.objects.all()  # 👈 FIX
 
     return render(request, "travel/buy_ticket.html", {
         "package": package,
