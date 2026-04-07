@@ -96,14 +96,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const eventData = JSON.parse(document.getElementById('event-data').textContent);
 
     const ticketData = {
-        early: { price: 0, qty: 0 },
+        premium: { price: 21000, qty: 0 },
         regular: { price: eventData.price, qty: 0 }
     };
 
-    if (eventData.isAkoka) {
-        ticketData.vip = { price: 7000, qty: 0 };
-        ticketData.vvip = { price: 25000, qty: 0 };
-    }
+    
 
     window.changeQty = function(type, delta) {
         if (!ticketData[type]) return;
