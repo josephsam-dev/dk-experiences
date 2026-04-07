@@ -35,21 +35,9 @@ class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
 
 <!-- TICKET TYPE -->
 <div>
-<label class="block mb-2">Select Ticket</label>
-
-<select id="ticketSelect"
-    class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
-
-    <option value="">Select Ticket</option>
-
-    {% for ticket in tickets %}
-    <option value="{{ ticket.price }}" data-id="{{ ticket.id }}">
-        {{ ticket.name }} - ₦{{ ticket.price }}
-    </option>
-    {% endfor %}
-
-</select>
-
+<p class="mb-4 text-lg">
+    Amount: ₦{{ package.price }}
+</p>
 </div>
 
 <!-- BUTTON -->
@@ -75,9 +63,8 @@ function payWithPaystack() {
     let email = document.querySelector("input[type='email']").value;
     let phone = document.querySelector("input[type='tel']").value;
 
-    let ticketSelect = document.getElementById("ticketSelect");
-    let amount = ticketSelect.value;
-    let ticketId = ticketSelect.options[ticketSelect.selectedIndex]?.dataset.id;
+   let amount = "{{ package.price }}";
+let ticketId = "{{ package.id }}";
 
     if (!name || !email || !phone) {
         alert("Please fill all fields");
@@ -102,7 +89,7 @@ function payWithPaystack() {
                 "&email=" + email +
                 "&phone=" + phone +
                 "&ticket_id=" + ticketId;
-        },
+        }, 
 
         onClose: function() {
             alert("Payment cancelled");
