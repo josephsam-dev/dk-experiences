@@ -26,24 +26,28 @@
 
     <div class="flex items-center gap-4">
 
-        <!-- MINUS -->
-        <button type="button"
-            onclick="changeQty('premium', -1)"
-            class="px-2 text-lg"
-            -
-        </button>
+        <div class="flex items-center gap-4">
 
-        <!-- QTY -->
-        <span id="premium-qty" class="min-w-[20px] text-center">
-            0
-        </span>
+    <!-- MINUS -->
+    <button type="button"
+        onclick="changeQty('premium', -1)"
+        class="text-lg">
+        -
+    </button>
 
-        <!-- PLUS -->
-        <button type="button"
-            onclick="changeQty('premium', 1)"
-           class="px-2 text-lg"
-            +
-        </button>
+    <!-- QTY -->
+    <span id="premium-qty" class="min-w-[20px] text-center">
+        0
+    </span>
+
+    <!-- PLUS -->
+    <button type="button"
+        onclick="changeQty('premium', 1)"
+        class="text-lg">
+        +
+    </button>
+
+</div>
 
     </div>
 
