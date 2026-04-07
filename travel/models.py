@@ -12,6 +12,7 @@ class TravelPackage(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to="travel/")
     duration = models.CharField(max_length=100)
+    youtube_url = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.title
