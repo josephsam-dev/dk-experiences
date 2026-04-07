@@ -14,6 +14,9 @@ class Event(models.Model):
     price = models.IntegerField()
     banner = models.ImageField(upload_to='events/', blank=True, null=True)
 
+    # ✅ ADD THIS BACK
+    is_akoka = models.BooleanField(default=False)
+
     def __str__(self):
         return self.title
 
@@ -23,7 +26,7 @@ class Event(models.Model):
 # =========================
 class Ticket(models.Model):
     event = models.ForeignKey(
-        Event,
+       'events.Event',
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -51,3 +54,4 @@ class Ticket(models.Model):
 
     def __str__(self):
         return self.email
+    

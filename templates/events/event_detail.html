@@ -19,12 +19,22 @@
 
        <!-- PREMIUM -->
 <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
-    <span class="text-green-500 font-bold">Premium - ₦21,000</span>
-    <div>
-        <button type="button" onclick="changeQty('premium', -1)">-</button>
-        <span id="premium-qty">0</span>
-        <button type="button" onclick="changeQty('premium', 1)">+</button>
-    </div>
+   <span class="text-green-500 font-bold">
+    {% if event.is_akoka %}
+        Early Bird (SOLD OUT)
+    {% else %}
+        Premium - ₦21,000
+    {% endif %}
+</span>
+    {% if event.is_akoka %}
+    <button type="button" disabled class="opacity-50 cursor-not-allowed">-</button>
+    <span id="premium-qty">0</span>
+    <button type="button" disabled class="opacity-50 cursor-not-allowed">+</button>
+{% else %}
+    <button type="button" onclick="changeQty('premium', -1)">-</button>
+    <span id="premium-qty">0</span>
+    <button type="button" onclick="changeQty('premium', 1)">+</button>
+{% endif %}
 </div>
 
         <!-- REGULAR -->
