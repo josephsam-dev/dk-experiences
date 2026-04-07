@@ -14,8 +14,7 @@ class Event(models.Model):
     price = models.IntegerField()
     banner = models.ImageField(upload_to='events/', blank=True, null=True)
 
-    # ✅ ADD THIS BACK
-    is_akoka = models.BooleanField(default=False)
+    is_akoka = models.BooleanField(default=False)  # 👈 MUST BE HERE
 
     def __str__(self):
         return self.title
