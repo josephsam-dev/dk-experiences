@@ -11,7 +11,6 @@ urlpatterns = [
 
     # OTHER ROUTES
     path("package/<int:id>/", views.travel_detail, name="travel_detail"),
-    path("buy-ticket/", views.buy_ticket, name="buy_ticket"),
     path("verify-payment/", views.verify_payment, name="verify_payment"),
     path("payment-success/", views.booking_success, name="payment_success"),
     path("booking-success/", views.booking_success, name="booking_success"),

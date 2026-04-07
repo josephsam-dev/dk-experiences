@@ -33,10 +33,10 @@
 </p>
 
 
-<a href="/travel/buy-ticket/{{ package.id }}/" 
+<a href="{% url 'travel_buy_ticket' package.id %}" 
    class="bg-black text-white px-6 py-3 rounded-lg inline-block">
    Proceed To Booking
-</a> 
+</a>
 
 
 <p>ID: {{ package.id }}</p>
