@@ -66,7 +66,7 @@
 
 {% endif %}
 
-        {% endif %}
+       
 
         <!-- TOTAL -->
         <div class="bg-gray-100 p-4 rounded-lg mb-6 flex justify-between">
@@ -93,7 +93,7 @@
 <script id="event-data" type="application/json">
 {
     "price": {{ event.price }},
-    "isAkoka": {% if event.title == "AKOKA FEST" %}true{% else %}false{% endif %}
+    "isAkoka": {{ event.is_akoka|yesno:"true,false" }}
 }
 </script>
 
