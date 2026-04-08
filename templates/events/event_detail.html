@@ -17,73 +17,54 @@
 
         <!-- 🎟️ TICKETS -->
 
-       <!-- PREMIUM -->
-<div class="flex justify-between items-center border p-4 rounded-lg mb-3">
+{% if event.is_akoka %}
 
+<!-- 🔥 AKOKA FEST -->
+
+<div class="flex justify-between items-center border p-4 rounded-lg mb-3">
+    <span class="text-green-500 font-bold">
+        Early Bird - SOLD OUT
+    </span>
+</div>
+
+<div class="flex justify-between items-center border p-4 rounded-lg mb-3">
+    <span>Regular - ₦{{ event.price }}</span>
+    <div>
+        <button type="button" onclick="changeQty('regular', -1)">-</button>
+        <span id="regular-qty">0</span>
+        <button type="button" onclick="changeQty('regular', 1)">+</button>
+    </div>
+</div>
+
+<div class="flex justify-between items-center border p-4 rounded-lg mb-3">
+    <span>VIP - ₦7,000</span>
+</div>
+
+<div class="flex justify-between items-center border p-4 rounded-lg mb-6">
+    <span>VVIP - ₦25,000</span>
+</div>
+
+{% else %}
+
+<!-- 🎬 NORMAL EVENT -->
+
+<div class="flex justify-between items-center border p-4 rounded-lg mb-3">
     <span class="text-green-500 font-bold">
         Premium - ₦21,000
     </span>
 
-    <div class="flex items-center gap-4">
-
-        <div class="flex items-center gap-4">
-
-    <!-- MINUS -->
-    <button type="button"
-        onclick="changeQty('premium', -1)"
-        class="text-lg">
-        -
-    </button>
-
-    <!-- QTY -->
-    <span id="premium-qty" class="min-w-[20px] text-center">
-        0
-    </span>
-
-    <!-- PLUS -->
-    <button type="button"
-        onclick="changeQty('premium', 1)"
-        class="text-lg">
-        +
-    </button>
-
-</div>
-
+    <div>
+        <button type="button" onclick="changeQty('premium', -1)">-</button>
+        <span id="premium-qty">0</span>
+        <button type="button" onclick="changeQty('premium', 1)">+</button>
     </div>
-
 </div>
 
-        <!-- REGULAR -->
-        <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
-            <span>Regular - ₦{{ event.price }}</span>
-            <div>
-                <button type="button" onclick="changeQty('regular', -1)">-</button>
-                <span id="regular-qty">0</span>
-                <button type="button" onclick="changeQty('regular', 1)">+</button>
-            </div>
-        </div>
+<div class="flex justify-between items-center border p-4 rounded-lg mb-3">
+    <span>Regular - ₦{{ event.price }}</span>
+</div>
 
-        {% if event.title == "AKOKA FEST" %}
-
-        <!-- VIP -->
-        <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
-            <span>VIP - ₦7,000</span>
-            <div>
-                <button type="button" onclick="changeQty('vip', -1)">-</button>
-                <span id="vip-qty">0</span>
-                <button type="button" onclick="changeQty('vip', 1)">+</button>
-            </div>
-        </div>
-
-        <!-- VVIP -->
-        <div class="flex justify-between items-center border p-4 rounded-lg mb-6">
-            <span>VVIP - ₦25,000</span>
-            <div>
-                <button type="button" onclick="changeQty('vvip', -1)">-</button>
-                <span id="vvip-qty">0</span>
-                <button type="button" onclick="changeQty('vvip', 1)">+</button>
-            </div>
-        </div>
+{% endif %}
 
         {% endif %}
 
