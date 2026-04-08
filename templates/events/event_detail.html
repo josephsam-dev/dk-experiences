@@ -53,10 +53,12 @@
         Premium - ₦21,000
     </span>
 
+    <div class="flex justify-between items-center border p-4 rounded-lg mb-6">
+    <span>VVIP - ₦25,000</span>
     <div>
-        <button type="button" onclick="changeQty('premium', -1)">-</button>
-        <span id="premium-qty">0</span>
-        <button type="button" onclick="changeQty('premium', 1)">+</button>
+        <button type="button" onclick="changeQty('vvip', -1)">-</button>
+        <span id="vvip-qty">0</span>
+        <button type="button" onclick="changeQty('vvip', 1)">+</button>
     </div>
 </div>
 
@@ -103,9 +105,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const eventData = JSON.parse(document.getElementById('event-data').textContent);
 
     const ticketData = {
-        premium: { price: 21000, qty: 0 },
-        regular: { price: eventData.price, qty: 0 }
-    };
+    premium: { price: 21000, qty: 0 },
+    regular: { price: eventData.price, qty: 0 },
+    vip: { price: 7000, qty: 0 },
+    vvip: { price: 25000, qty: 0 }
+};
 
     
 
