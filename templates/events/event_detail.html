@@ -42,6 +42,11 @@
 
 <div class="flex justify-between items-center border p-4 rounded-lg mb-6">
     <span>VVIP - ₦25,000</span>
+    <div>
+        <button type="button" onclick="changeQty('vvip', -1)">-</button>
+        <span id="vvip-qty">0</span>
+        <button type="button" onclick="changeQty('vvip', 1)">+</button>
+    </div>
 </div>
 
 {% else %}
@@ -53,12 +58,12 @@
         Premium - ₦21,000
     </span>
 
-    <div class="flex justify-between items-center border p-4 rounded-lg mb-6">
-    <span>VVIP - ₦25,000</span>
+    <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
+    <span>VIP - ₦7,000</span>
     <div>
-        <button type="button" onclick="changeQty('vvip', -1)">-</button>
-        <span id="vvip-qty">0</span>
-        <button type="button" onclick="changeQty('vvip', 1)">+</button>
+        <button type="button" onclick="changeQty('vip', -1)">-</button>
+        <span id="vip-qty">0</span>
+        <button type="button" onclick="changeQty('vip', 1)">+</button>
     </div>
 </div>
 
