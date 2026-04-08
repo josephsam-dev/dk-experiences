@@ -16,7 +16,6 @@
         {% csrf_token %}
 
         <!-- 🎟️ TICKETS -->
-
 {% if event.is_akoka %}
 
 <!-- 🔥 AKOKA FEST -->
@@ -36,28 +35,8 @@
     </div>
 </div>
 
+<!-- ✅ VIP -->
 <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
-    <span>VIP - ₦7,000</span>
-</div>
-
-<div class="flex justify-between items-center border p-4 rounded-lg mb-6">
-    <span>VVIP - ₦25,000</span>
-    <div>
-        <button type="button" onclick="changeQty('vvip', -1)">-</button>
-        <span id="vvip-qty">0</span>
-        <button type="button" onclick="changeQty('vvip', 1)">+</button>
-    </div>
-</div>
-{% else %}
-
-<!-- 🎬 NORMAL EVENT -->
-
-<div class="flex justify-between items-center border p-4 rounded-lg mb-3">
-    <span class="text-green-500 font-bold">
-        Premium - ₦21,000
-    </span>
-
-    <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
     <span>VIP - ₦7,000</span>
     <div>
         <button type="button" onclick="changeQty('vip', -1)">-</button>
@@ -66,13 +45,44 @@
     </div>
 </div>
 
+<!-- ✅ VVIP -->
+<div class="flex justify-between items-center border p-4 rounded-lg mb-6">
+    <span>VVIP - ₦25,000</span>
+    <div>
+        <button type="button" onclick="changeQty('vvip', -1)">-</button>
+        <span id="vvip-qty">0</span>
+        <button type="button" onclick="changeQty('vvip', 1)">+</button>
+    </div>
+</div>
+
+{% else %}
+
+<!-- 🎬 NORMAL EVENT -->
+
+<!-- Premium -->
+<div class="flex justify-between items-center border p-4 rounded-lg mb-3">
+    <span class="text-green-500 font-bold">
+        Premium - ₦21,000
+    </span>
+    <div>
+        <button type="button" onclick="changeQty('premium', -1)">-</button>
+        <span id="premium-qty">0</span>
+        <button type="button" onclick="changeQty('premium', 1)">+</button>
+    </div>
+</div>
+
+<!-- Regular -->
 <div class="flex justify-between items-center border p-4 rounded-lg mb-3">
     <span>Regular - ₦{{ event.price }}</span>
+    <div>
+        <button type="button" onclick="changeQty('regular', -1)">-</button>
+        <span id="regular-qty">0</span>
+        <button type="button" onclick="changeQty('regular', 1)">+</button>
+    </div>
 </div>
 
 {% endif %}
 
-       
 
         <!-- TOTAL -->
         <div class="bg-gray-100 p-4 rounded-lg mb-6 flex justify-between">
