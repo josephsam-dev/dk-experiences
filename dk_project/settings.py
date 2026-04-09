@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'core',
     'travel',
     'django.contrib.humanize',
+
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
