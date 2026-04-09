@@ -7,19 +7,24 @@
 
 <h1 class="text-4xl font-bold mb-8">Upcoming Events</h1>
 
-{% if events %} <div class="grid md:grid-cols-3 gap-6">
+{% if events %} 
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-```
     {% for event in events %}
 
-    <div class="bg-white shadow-lg rounded-xl overflow-hidden transition transform hover:-translate-y-1 hover:shadow-2xl">
+    <div class="bg-white shadow-lg rounded-xl overflow-hidden">
+        {% if event.banner %}
+        <img src="{{ event.banner.url }}" class="w-full h-48 object-cover">
+        {% endif %}
 
-    {% if event.banner %}
-    <img src="{{ event.banner.url }}" alt="{{ event.title }}" class="w-full h-48 object-cover">
-    {% endif %}
+        <div class="p-6">
+            <h2>{{ event.title }}</h2>
+        </div>
+    </div>
 
-    <div class="p-6">
+    {% endfor %}
 
+</div>
         
            
        
