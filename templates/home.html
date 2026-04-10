@@ -106,8 +106,6 @@ View All Events →
 
 {% for event in events %}
 
-{% for event in events %}
-
 <div class="bg-[#0b0b0b] border border-gray-800 rounded-xl overflow-hidden">
 
     {% if event.banner %}
@@ -188,34 +186,42 @@ View All Events →
 
 <div class="grid md:grid-cols-3 gap-8">
 
-{% for trip in trips %}
+<div class="relative">
 
-<div class="bg-[#0b0b0b] border border-gray-800 rounded-xl overflow-hidden">
-
-    {% if trip.image %}
-        <img src="{{ trip.image.url }}" class="w-full h-48 object-cover">
+    {% if event.banner %}
+        <img src="{{ event.banner.url }}" 
+             class="w-full h-48 object-cover">
+    {% else %}
+        <img src="{% static 'images/party.jpg' %}" 
+             class="w-full h-48 object-cover">
     {% endif %}
 
-    <div class="p-6">
+</div>
 
+    <div class="p-6">
         <h3 class="text-xl font-semibold text-white mb-3">
-            {{ trip.title }}
+            {{ event.title }}
         </h3>
 
         <p class="text-gray-400 text-sm mb-2">
-            {{ trip.location }}
+            📅 {{ event.date }}
         </p>
 
-        <p class="text-orange-500 font-bold mb-4">
-            ₦{{ trip.price }}
+        <p class="text-gray-400 text-sm mb-4">
+            {{ event.location }}
         </p>
 
-        <a href="{% url 'travel_detail' trip.id %}"
+        <a href="{% url 'event_detail' event.id %}"
            class="block w-full text-center bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">
-           View Package
+           Get Tickets
         </a>
-
     </div>
+
+</div>
+
+{% empty %}
+<p class="text-gray-400">No events available yet.</p>
+{% endfor %}
 
 </div>
 
