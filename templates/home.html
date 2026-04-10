@@ -4,103 +4,37 @@
 {% block content %}
 
 <!-- HERO SECTION -->
+
 <section class="relative min-h-screen flex items-center justify-center">
 
-<!-- Background Image -->
 <div class="absolute inset-0">
-<img src="{% static 'images/hero-concert.jpg' %}" class="w-full h-full object-cover">
-<div class="absolute inset-0 bg-black/60"></div>
+    <img src="{% static 'images/hero-concert.jpg' %}" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-black/60"></div>
 </div>
 
 <div class="relative z-10 container mx-auto px-6 text-center">
 
-<span class="inline-block bg-orange-500/20 text-orange-400 px-4 py-1 rounded-full mb-6">
-Now booking for 2026
-</span>
-
-<h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
-Creating Unforgettable Experiences Across
-<span class="text-orange-500">Events</span> &
-<span class="text-orange-500">Travel</span>
+```
+<h1 class="text-5xl font-bold text-white mb-6">
+    DK Experiences
 </h1>
 
-<p class="text-gray-300 max-w-2xl mx-auto mb-10">
-From concerts, movie nights and campus festivals to luxury and group travel experiences.
-Your gateway to premium entertainment in Lagos, Nigeria.
+<p class="text-gray-300 mb-6">
+    Premium Events & Travel Experiences
 </p>
-
-<div class="flex justify-center gap-4">
-
-
-<a href="/events"
-class="bg-orange-500 px-6 py-3 rounded-lg text-white hover:bg-orange-600">
-Explore Events
-</a>
-
-
-<a href="/travel"
-class="border border-white px-6 py-3 rounded-lg text-white hover:bg-white hover:text-black">
-Book a Trip
-</a>
-
-</div>
-
-<!-- COUNTDOWN TIMER -->
-
-<div class="mt-12 text-center text-white">
-
-<h3 class="text-xl font-semibold mb-4">
-Akoka Fest 2026 Countdown
-</h3>
-
-<div class="flex justify-center gap-8">
-
-<div class="bg-black/60 px-6 py-4 rounded-lg text-center">
-<span id="days" class="text-3xl font-bold text-orange-500">0</span>
-<p class="text-white text-sm">Days</p>
-</div>
-
-<div class="bg-black/60 px-6 py-4 rounded-lg text-center">
-<span id="hours" class="text-3xl font-bold text-orange-500">0</span>
-<p class="text-white text-sm">Hours</p>
-</div>
-
-<div class="bg-black/60 px-6 py-4 rounded-lg text-center">
-<span id="minutes" class="text-3xl font-bold text-orange-500">0</span>
-<p class="text-white text-sm">Minutes</p>
-</div>
-
-<div class="bg-black/60 px-6 py-4 rounded-lg text-center">
-<span id="seconds" class="text-3xl font-bold text-orange-500">0</span>
-<p class="text-white text-sm">Seconds</p>
-</div>
-
-</div>
-
-</div>
+```
 
 </div>
 </section>
-
-
 
 <!-- UPCOMING EVENTS -->
 
 <section class="bg-black py-24">
 <div class="container mx-auto px-6">
 
-<div class="flex justify-between items-center mb-12">
-
-<div>
-<p class="text-orange-500 text-sm mb-2">What's Coming</p>
-<h2 class="text-4xl font-bold text-white">Upcoming Events</h2>
-</div>
-
-<a href="/events" class="border border-gray-700 px-5 py-2 rounded-lg text-white hover:bg-gray-800">
-View All Events →
-</a>
-
-</div>
+<h2 class="text-4xl font-bold text-white mb-12 text-center">
+Upcoming Events
+</h2>
 
 <div class="grid md:grid-cols-3 gap-8">
 
@@ -108,57 +42,32 @@ View All Events →
 
 <div class="bg-[#0b0b0b] border border-gray-800 rounded-xl overflow-hidden">
 
-    {% if event.banner %}
-        <img src="{{ event.banner.url }}" 
-             class="w-full h-48 object-cover">
-    {% endif %}
-
-    <div class="p-6">
-
-        <h3 class="text-xl font-semibold text-white mb-3">
-            {{ event.title }}
-        </h3>
-
-        <p class="text-gray-400 text-sm mb-2">
-            📅 {{ event.date }}
-        </p>
-
-        <p class="text-gray-400 text-sm mb-4">
-            {{ event.location }}
-        </p>
-
-        <a href="{% url 'event_detail' event.id %}"
-           class="block w-full text-center bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">
-           Get Tickets
-        </a>
-
-    </div>
-
-</div>
-
-{% endfor %}
-
 ```
+<!-- IMAGE -->
+{% if event.banner %}
+    <img src="{{ event.banner.url }}" class="w-full h-48 object-cover">
+{% else %}
+    <img src="https://picsum.photos/400" class="w-full h-48 object-cover">
+{% endif %}
 
+<!-- DETAILS -->
 <div class="p-6">
-
-    <h3 class="text-xl font-semibold text-white mb-3">
+    <h3 class="text-white text-lg font-bold mb-2">
         {{ event.title }}
     </h3>
 
-    <p class="text-gray-400 text-sm mb-2">
+    <p class="text-gray-400 text-sm">
         📅 {{ event.date }}
     </p>
 
-    <p class="text-gray-400 text-sm mb-4">
+    <p class="text-gray-500 text-sm mb-4">
         {{ event.location }}
     </p>
 
     <a href="{% url 'event_detail' event.id %}"
-       class="block w-full text-center bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">
+       class="block w-full text-center bg-orange-500 py-3 rounded-lg text-white hover:bg-orange-600">
        Get Tickets
     </a>
-
 </div>
 ```
 
@@ -166,117 +75,18 @@ View All Events →
 
 {% empty %}
 
-<p class="text-gray-400">No events available yet.</p>
-
-{% endfor %}
-
-</div>
-</div>
-</section>
-
-
-<!-- TRAVEL SECTION -->
-<!-- TRAVEL EXPERIENCES -->
-<section class="bg-black py-24">
-<div class="container mx-auto px-6">
-
-<h2 class="text-4xl font-bold text-white mb-12">
-🌍 Travel Experiences
-</h2>
-
-<div class="grid md:grid-cols-3 gap-8">
-
-<div class="relative">
-
-    {% if event.banner %}
-        <img src="{{ event.banner.url }}" 
-             class="w-full h-48 object-cover">
-    {% else %}
-        <img src="{% static 'images/party.jpg' %}" 
-             class="w-full h-48 object-cover">
-    {% endif %}
-
-</div>
-
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-white mb-3">
-            {{ event.title }}
-        </h3>
-
-        <p class="text-gray-400 text-sm mb-2">
-            📅 {{ event.date }}
-        </p>
-
-        <p class="text-gray-400 text-sm mb-4">
-            {{ event.location }}
-        </p>
-
-        <a href="{% url 'event_detail' event.id %}"
-           class="block w-full text-center bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">
-           Get Tickets
-        </a>
-    </div>
-
-</div>
-
-{% empty %}
-<p class="text-gray-400">No events available yet.</p>
-{% endfor %}
-
-</div>
-
-
-{% empty %}
-<p class="text-gray-400">No travel packages yet.</p>
-{% endfor %}
-
-</div>
-</div>
-</section>
-
-
-<!-- WHY CHOOSE US -->
-<section class="bg-black py-24">
-<div class="container mx-auto px-6 text-center">
-
-<p class="text-orange-500 mb-3">Why DK Experiences</p>
-
-<h2 class="text-4xl font-bold text-white mb-6">
-Why Choose Us
-</h2>
-
-<p class="text-gray-400 max-w-xl mx-auto mb-16">
-We're committed to creating exceptional experiences.
+<p class="text-gray-400 text-center col-span-3">
+    No events available yet.
 </p>
 
-<div class="grid md:grid-cols-4 gap-8">
-
-<div class="bg-[#0b0b0b] p-6 rounded-xl border border-gray-800">
-<h3 class="text-white font-semibold mb-3">Professional Event Execution</h3>
-<p class="text-gray-400 text-sm">World-class events with attention to detail.</p>
-</div>
-
-<div class="bg-[#0b0b0b] p-6 rounded-xl border border-gray-800">
-<h3 class="text-white font-semibold mb-3">Youth Focused Audience</h3>
-<p class="text-gray-400 text-sm">Events designed for vibrant young audiences.</p>
-</div>
-
-<div class="bg-[#0b0b0b] p-6 rounded-xl border border-gray-800">
-<h3 class="text-white font-semibold mb-3">Seamless Travel Planning</h3>
-<p class="text-gray-400 text-sm">We handle everything from visas to accommodation.</p>
-</div>
-
-<div class="bg-[#0b0b0b] p-6 rounded-xl border border-gray-800">
-<h3 class="text-white font-semibold mb-3">Strong Brand Partnerships</h3>
-<p class="text-gray-400 text-sm">Collaborations with leading brands.</p>
-</div>
+{% endfor %}
 
 </div>
 </div>
 </section>
 
-
 <!-- EVENT GALLERY -->
+
 <section class="bg-black py-24">
 <div class="container mx-auto px-6 text-center">
 
@@ -289,65 +99,10 @@ Event Gallery
 <img src="{% static 'images/cinema.jpg' %}" class="rounded-xl w-full h-64 object-cover">
 <img src="{% static 'images/party.jpg' %}" class="rounded-xl w-full h-64 object-cover">
 <img src="{% static 'images/rooftop.jpg' %}" class="rounded-xl w-full h-64 object-cover">
+
 </div>
 
 </div>
 </section>
 
-
-<!-- EMAIL SUBSCRIBE -->
-<section class="bg-black py-24">
-<div class="container mx-auto px-6 text-center max-w-xl">
-
-<h2 class="text-3xl font-bold text-white mb-4">
-Stay in the Loop
-</h2>
-
-        <!-- Heading -->
-        <div class="flex justify-between items-center mb-10">
-            <div>
-                <p class="text-orange-500 text-sm">What's Coming</p>
-                <h2 class="text-3xl font-bold text-white">Upcoming Events</h2>
-            </div>
-        </div>
-
-        <!-- Events Grid -->
-        <div class="grid md:grid-cols-3 gap-6">
-
-          {% for event in events %}
-<div class="bg-[#0b0b0b] rounded-xl overflow-hidden border border-gray-800 hover:border-orange-500 transition duration-300">
-
-    <!-- IMAGE -->
-    <div class="relative">
-        {% if event.banner %}
-            <img src="{{ event.banner.url }}" 
-                 class="w-full h-48 object-cover">
-        {% else %}
-            <img src="https://picsum.photos/400" 
-                 class="w-full h-48 object-cover">
-        {% endif %}
-
-        <!-- Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
-
-        <!-- Title -->
-        <div class="absolute bottom-3 left-3 right-3">
-            <h2 class="text-white font-bold text-lg">
-                {{ event.title }}
-            </h2>
-        </div>
-    </div>
-
-    <!-- DETAILS -->
-    <div class="p-4">
-        <p class="text-sm text-gray-400">📅 {{ event.date }}</p>
-        <p class="text-sm text-gray-500">{{ event.location }}</p>
-
-        <a href="{% url 'event_detail' event.id %}" 
-           class="block mt-3 bg-orange-500 text-center py-2 rounded-lg hover:bg-orange-600">
-            Get Tickets
-        </a>
-    </div>
-
-</div>
-{% endfor %}
+{% endblock %}
