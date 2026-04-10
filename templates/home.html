@@ -108,11 +108,18 @@ Akoka Fest 2026 Countdown
 
 <div class="bg-[#0b0b0b] border border-gray-800 rounded-xl overflow-hidden hover:border-orange-500 transition duration-300">
 
-    {% if event.banner %}
-        <img src="{{ event.banner.url }}" class="w-full h-48 object-cover">
-    {% else %}
-        <img src="https://picsum.photos/400" class="w-full h-48 object-cover">
-    {% endif %}
+    {% if event.title == "SILENT DISCO PARTY+GAME NIGHT" %}
+    <img src="{% static 'images/silent.jpg' %}" class="w-full h-48 object-cover">
+
+{% elif event.title == "AKOKA FEST" %}
+    <img src="{% static 'images/akoka.jpg' %}" class="w-full h-48 object-cover">
+
+{% elif event.title == "MOVIE NIGHT(April edition)" %}
+    <img src="{% static 'images/movie.jpg' %}" class="w-full h-48 object-cover">
+
+{% else %}
+    <img src="https://picsum.photos/400" class="w-full h-48 object-cover">
+{% endif %}
 
     <div class="p-6">
 
@@ -212,6 +219,9 @@ Event Gallery
 <section class="bg-black py-24">
 <div class="container mx-auto px-6 text-center max-w-xl">
 
+<h2 class="text-3xl font-bold text-white mb-4">
+Stay in the Loop
+</h2>
 
         <!-- Heading -->
         <div class="flex justify-between items-center mb-10">
