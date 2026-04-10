@@ -164,33 +164,42 @@ Akoka Fest 2026 Countdown
 
 <div class="grid md:grid-cols-3 gap-8">
 
-    <div class="bg-[#0b0b0b] border border-gray-800 rounded-xl overflow-hidden">
+    <a href="{% url 'travel_detail' 1 %}">
+    <div class="bg-[#0b0b0b] border border-gray-800 rounded-xl overflow-hidden hover:scale-105 transition duration-300">
 
-        <img src="{% static 'images/travel.jpg' %}" class="w-full h-auto rounded-xl">
+        <img src="{% static 'images/travel.jpg' %}" class="w-full h-auto">
 
         <div class="p-6">
-            <h3 class="text-white font-bold text-lg mb-2">
-                A Day Camping @ Sunset Haven Beach
-            </h3>
 
-            <p class="text-gray-400 text-sm mb-2">
-                📅 April 25–26, 2026
-            </p>
+            <a href="{% url 'travel_detail' 1 %}">
+<div class="bg-[#0b0b0b] border border-gray-800 rounded-xl overflow-hidden hover:scale-105 transition duration-300">
 
-            <p class="text-gray-400 text-sm mb-4">
-                Lagos, Nigeria
-            </p>
+    <img src="{% static 'images/travel.jpg' %}" class="w-full h-auto">
 
-            <a href="#"
-               class="block bg-orange-500 text-center py-2 rounded-lg text-white hover:bg-orange-600">
-                Book Now
-            </a>
-        </div>
+    <div class="p-6">
+
+        <h3 class="text-white font-bold text-lg mb-2">
+            A Day Camping @ Sunset Haven Beach
+        </h3>
+
+        <p class="text-gray-400 text-sm mb-2">
+            📅 April 25–26, 2026
+        </p>
+
+        <p class="text-gray-400 text-sm mb-4">
+            Lagos, Nigeria
+        </p>
+
+        <span class="block bg-orange-500 text-center py-2 rounded-lg text-white">
+            Book Now
+        </span>
 
     </div>
 
 </div>
+</a>
 
+</div>
 </div>
 </section>
 <!-- WHY CHOOSE US -->
