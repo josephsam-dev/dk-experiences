@@ -105,47 +105,48 @@ Akoka Fest 2026 Countdown
 <div class="grid md:grid-cols-3 gap-8">
 
 {% for event in events %}
+
+<div class="bg-[#0b0b0b] border border-gray-800 rounded-xl overflow-hidden hover:border-orange-500 transition duration-300">
+
     {% if event.banner %}
         <img src="{{ event.banner.url }}" class="w-full h-48 object-cover">
-   {% else %}
-    <img src="https://picsum.photos/400" class="w-full h-48 object-cover">
-{% endif %}
+    {% else %}
+        <img src="https://picsum.photos/400" class="w-full h-48 object-cover">
+    {% endif %}
 
-<div class="p-6">
+    <div class="p-6">
 
-    <h3 class="text-xl font-semibold text-white mb-3">
-        {{ event.title }}
-    </h3>
+        <h3 class="text-xl font-semibold text-white mb-3">
+            {{ event.title }}
+        </h3>
 
-    <p class="text-gray-400 text-sm mb-2">
-        📅 {{ event.date }}
-    </p>
+        <p class="text-gray-400 text-sm mb-2">
+            📅 {{ event.date }}
+        </p>
 
-    <p class="text-gray-400 text-sm mb-4">
-        {{ event.location }}
-    </p>
+        <p class="text-gray-400 text-sm mb-4">
+            {{ event.location }}
+        </p>
 
-    <a href="{% url 'event_detail' event.id %}"
-       class="block w-full text-center bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">
-       Get Tickets
-    </a>
-
-</div>
-
-</div>
-
+        <a href="{% url 'event_detail' event.id %}"
+           class="block w-full text-center bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">
+           Get Tickets
+        </a>
 
     </div>
 
 </div>
 
 {% empty %}
-<p class="text-gray-400">No events available yet.</p>
+<p class="text-gray-400 col-span-3 text-center">
+    No events available yet.
+</p>
 {% endfor %}
 
 </div>
-</div>
 
+</div>
+</section>
 <!-- TRAVEL EXPERIENCES -->
 <section class="bg-black py-24">
 <div class="container mx-auto px-6">
