@@ -309,76 +309,40 @@ Stay in the Loop
         <!-- Events Grid -->
         <div class="grid md:grid-cols-3 gap-6">
 
-            {% for event in events %}
-            <div class="bg-[#0b0b0b] rounded-xl overflow-hidden border border-gray-800 hover:border-orange-500 transition duration-300">
+          {% for event in events %}
+<div class="bg-[#0b0b0b] rounded-xl overflow-hidden border border-gray-800 hover:border-orange-500 transition duration-300">
 
-                
+    <!-- IMAGE -->
+    <div class="relative">
+        {% if event.banner %}
+            <img src="{{ event.banner.url }}" 
+                 class="w-full h-48 object-cover">
+        {% else %}
+            <img src="https://picsum.photos/400" 
+                 class="w-full h-48 object-cover">
+        {% endif %}
 
-                    <!-- Overlay -->
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
 
-                    <!-- Title -->
-                    <div class="absolute bottom-3 left-3 right-3">
-                        <h2 class="text-white font-bold text-lg">
-                            {{ event.title }}
-                        </h2>
-                    </div>
-                </div>
-
-                <!-- DETAILS -->
-                <div class="p-4">
-                    <p class="text-sm text-gray-400">📅 {{ event.date }}</p>
-                    <p class="text-sm text-gray-500">{{ event.location }}</p>
-
-                    <a href="#" class="block mt-3 bg-orange-500 text-center py-2 rounded-lg hover:bg-orange-600">
-                        Get Tickets
-                    </a>
-                </div>
-
-            </div>
-            {% endfor %}
-
+        <!-- Title -->
+        <div class="absolute bottom-3 left-3 right-3">
+            <h2 class="text-white font-bold text-lg">
+                {{ event.title }}
+            </h2>
         </div>
     </div>
-</section>
-Subscribe to get updates on upcoming events.
-</p>
 
-<div class="flex gap-3">
+    <!-- DETAILS -->
+    <div class="p-4">
+        <p class="text-sm text-gray-400">📅 {{ event.date }}</p>
+        <p class="text-sm text-gray-500">{{ event.location }}</p>
 
-<input type="email"
-placeholder="Enter your email"
-class="flex-1 bg-[#111] border border-gray-700 rounded-lg px-4 py-3 text-white">
-
-<button class="bg-orange-500 px-6 py-3 rounded-lg text-white">
-Subscribe →
-</button>
+        <a href="{% url 'event_detail' event.id %}" 
+           class="block mt-3 bg-orange-500 text-center py-2 rounded-lg hover:bg-orange-600">
+            Get Tickets
+        </a>
+    </div>
 
 </div>
-
-</div>
-</section>
-<script>
-
-const eventDate = new Date("May 9, 2026 16:00:00").getTime();
-
-setInterval(function() {
-
-const now = new Date().getTime();
-const distance = eventDate - now;
-
-const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-document.getElementById("days").innerHTML = days;
-document.getElementById("hours").innerHTML = hours;
-document.getElementById("minutes").innerHTML = minutes;
-document.getElementById("seconds").innerHTML = seconds;
-
-}, 1000);
-
-</script>
-
-{% endblock %}
+{% endfor %}
