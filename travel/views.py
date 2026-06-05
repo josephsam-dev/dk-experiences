@@ -181,3 +181,9 @@ def travel_page(request):
 def travel_detail(request, id):
     trip = get_object_or_404(TravelPackage, id=id)
     return render(request, "travel_detail.html", {"package": trip})
+
+
+from django.shortcuts import render
+
+def suspended(request):
+    return render(request, "suspended.html")
