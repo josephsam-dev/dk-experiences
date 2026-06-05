@@ -4,14 +4,7 @@ from travel.models import TravelPackage, BlogPost
 
 
 def home(request):
-    events = Event.objects.all().order_by('-date')
-    trips = TravelPackage.objects.all().order_by('-id')
-
-    return render(request, 'home.html', {
-        'events': events,
-        'trips': trips
-    })
-
+    return render(request, "suspended.html")
 
 def events(request):
     events = Event.objects.all()
