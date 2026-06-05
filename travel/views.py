@@ -15,9 +15,7 @@ from .models import TravelPackage, Booking, BlogPost, PartnershipApplication, Ti
 # TRAVEL
 # =========================
 def travel_page(request):
-    packages = TravelPackage.objects.all()
-    return render(request, "travel.html", {"packages": packages})
-
+    return render(request, "suspended.html")
 
 def travel_detail(request, id):
     package = get_object_or_404(TravelPackage, id=id)
@@ -174,9 +172,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import TravelPackage
 
 def travel_page(request):
-    packages = TravelPackage.objects.all()
-    return render(request, "travel.html", {"packages": packages})
-
+    return render(request, "suspended.html")
 
 def travel_detail(request, id):
     trip = get_object_or_404(TravelPackage, id=id)
